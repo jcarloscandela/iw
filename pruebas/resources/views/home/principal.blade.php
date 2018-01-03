@@ -1,5 +1,5 @@
 @extends('layout')
-
+@extends('layouts.app')
 @section('subtitulo')
 <h3>{{$donde}}</h3>
 @stop

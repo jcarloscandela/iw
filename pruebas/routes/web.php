@@ -14,6 +14,9 @@
 Route::get('/', function () {
     return view('/home/laravel');
 });*/
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/', 'HomeController@index')->name('home.inicio');
 
@@ -22,3 +25,8 @@ Route::get('/listado', 'HomeController@listado')->name('home.listado');
 
 Route::get('/tabla', 'HomeController@tabla')->name('home.tabla');
 Route::get('/tabla_ajax', 'HomeController@tabla_ajax')->name('ajax.tabla');
+
+
+Route::get('/welcome', function(){
+  return view('welcome');
+});

@@ -24,13 +24,12 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     ];
 });
 
-
 $factory->define(App\agenda::class, function (Faker\Generator $faker) {
 
     $faker = Faker\Factory::create('es_ES');
-    
+
     $sexoAux = $faker->boolean(75);
-    
+
     $sexo = $sexoAux?"H":"M";
     return [
         'nombre' => $faker->name($sexoAux?'male':'female'),
@@ -38,6 +37,15 @@ $factory->define(App\agenda::class, function (Faker\Generator $faker) {
         'telefono' => $faker->phoneNumber,
         'sexo' => $sexo,
         'observaciones' =>$faker->text
+    ];
+});
+
+$factory->define(App\Artist::class, function (Faker\Generator $faker) {
+    return [
+        //
+        'name' => $faker->name,
+        'picture' => str_random(15),//str_random(10).'@gmail.com',
+        'biography' => str_random(20),
     ];
 });
 
@@ -58,9 +66,9 @@ $factory->define(App\agenda::class, function (Faker\Generator $faker) {
 
 
 $factory->define(App\Persona::class, function (Faker\Generator $faker) {
-    
+
     $faker=Faker\Factory::create('es_ES');
-    
+
     return [
         'nombre' => $faker->name,
         'email' => $faker->email,
@@ -69,8 +77,3 @@ $factory->define(App\Persona::class, function (Faker\Generator $faker) {
         'observaciones' => $faker->text
     ];
 });
-
-
-
-
-

@@ -26,6 +26,9 @@ Route::get('/listado', 'HomeController@listado')->name('home.listado');
 Route::get('/tabla', 'HomeController@tabla')->name('home.tabla');
 Route::get('/tabla_ajax', 'HomeController@tabla_ajax')->name('ajax.tabla');
 
+Route::get('/logged', function(){
+  return view('home');
+});
 
 Route::get('/welcome', function(){
   return view('welcome');

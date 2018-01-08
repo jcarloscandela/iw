@@ -15,6 +15,8 @@ class CreateDiscographiesTable extends Migration
     {
         Schema::create('discographies', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name');
+            $table->string('logo');
             $table->timestamps();
         });
     }

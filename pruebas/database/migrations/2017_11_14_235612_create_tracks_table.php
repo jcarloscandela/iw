@@ -15,6 +15,15 @@ class CreateTracksTable extends Migration
     {
         Schema::create('tracks', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('title');
+            $table->integer('bpm');
+            $table->string('keu');
+            $table->time('duration');
+            $table->float('price');
+            $table->string('genre');
+            $table->string('realease');
+            //$table->foreing('genre')->references('name')->on('genres');
+            //$table->foreing('release')->references('title')->on('releases');
             $table->timestamps();
         });
     }

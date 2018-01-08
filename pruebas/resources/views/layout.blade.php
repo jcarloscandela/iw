@@ -76,8 +76,19 @@
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
+                    <ul class="nav navbar-nav navbar">
                         &nbsp;
+                        <li> <a href="#">tracks</a></li>
+                        <li class="dropdown">
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                              genres <span class="caret"></span>
+                          </a>
+                          <ul class="dropdown-menu" role="menu" >
+                            <?php foreach (App\Genre::all() as $g): ?>
+                              <li><a href="{{url('/genres/').'/'.$g->name}}">{{$g->name}}</a></li>
+                            <?php endforeach; ?>
+                          </ul>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

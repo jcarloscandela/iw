@@ -33,3 +33,5 @@ Route::get('/logged', function(){
 Route::get('/welcome', function(){
   return view('welcome');
 });
+
+Route::get('/tracks', 'TracksController@index');

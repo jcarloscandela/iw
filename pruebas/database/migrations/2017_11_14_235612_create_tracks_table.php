@@ -17,11 +17,11 @@ class CreateTracksTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->integer('bpm');
-            $table->string('keu');
+            $table->string('key');
             $table->time('duration');
             $table->float('price');
             $table->string('genre');
-            $table->string('realease');
+            $table->string('release');
             //$table->foreing('genre')->references('name')->on('genres');
             //$table->foreing('release')->references('title')->on('releases');
             $table->timestamps();

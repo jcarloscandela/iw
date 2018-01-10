@@ -3,7 +3,7 @@
 <div class="">
   <h1 style="margin:2%">{{$artist->name}}</h1>
   <div class="" style="padding-right:20%; padding-left:5%">
-    <img src="http://www.cochesenpie.es/images/sin-imagen.gif" style="float:left; margin-right:5%" alt="" height="10%" width="10%">
+    <img src="{{ asset($artist->picture) }}" style="float:left; margin-right:5%" alt="">
     {{$artist->biography}}
   </div>
 </div>

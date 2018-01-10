@@ -20,16 +20,25 @@ class CreateTracksTable extends Migration
             $table->string('key');
             $table->time('duration');
             $table->float('price');
-            $table->string('genre');
+            $table->integer('genre_id')->unsigned();
+            $table->foreign('genre_id')->references('id')->on('genres');
             $table->string('release');
             $table->integer('artist_id')->unsigned();
             $table->foreign('artist_id')->references('id')->on('artists');
-            //$table->foreing('genre')->references('name')->on('genres');
+           
             //$table->foreing('release')->references('title')->on('releases');
             $table->timestamps();
         });
+
+        /*
+        Schema::table('tracks', function($table) {
+            $table->foreign('genre_id')->references('id')->on('genres');
+        });*/
     }
 
+   
+    
+    //2017_11_14_235612_create_tracks_table
     /**
      * Reverse the migrations.
      *

@@ -1,10 +1,10 @@
 @extends('layouts.app')
 @section('content')
 <div class="">
-  <h1>{{$artist->name}}</h1>
-  <div class="">
-    <img src="http://www.cochesenpie.es/images/sin-imagen.gif" style="float:left" alt="" height="10%" width="10%">
-    <p style="float:left; margin-left:30px; margin-top:10px">{{$artist->biography}}</p>
+  <h1 style="margin:2%">{{$artist->name}}</h1>
+  <div class="" style="padding-right:20%; padding-left:5%">
+    <img src="http://www.cochesenpie.es/images/sin-imagen.gif" style="float:left; margin-right:5%" alt="" height="10%" width="10%">
+    {{$artist->biography}}
   </div>
 </div>
 

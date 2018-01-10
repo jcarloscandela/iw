@@ -38,7 +38,6 @@ Route::get('/tracks', 'TracksController@index')->name('tracks.tabla');
 
 Route::get('/artists', 'ArtistController@index')->name('artist.tabla');
 
-Route::get('artist/{name}', 'ArtistController@show');/*function($name)
-{
-    echo $name;
-});*/
+Route::get('artist/{name}', 'ArtistController@show');
+
+Route::get('genres/{name}', 'TracksController@showByGenre');

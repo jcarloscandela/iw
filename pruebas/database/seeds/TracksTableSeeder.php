@@ -14,5 +14,6 @@ class TracksTableSeeder extends Seeder
         //if (App::environment()!=='production') {
             DB::table('tracks')->delete();
         factory(App\Track::class, 100)->create();
+        
     }
 }

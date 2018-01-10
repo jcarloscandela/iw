@@ -14,17 +14,19 @@ class CreateTracksTable extends Migration
     public function up()
     {
         Schema::create('tracks', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('title');
-            $table->integer('bpm');
-            $table->string('keu');
-            $table->time('duration');
-            $table->float('price');
-            $table->string('genre');
-            $table->string('realease');
+          $table->increments('id');
+         $table->string('title');
+         $table->integer('bpm');
+         $table->string('key');
+         $table->time('duration');
+         $table->float('price');
+         $table->string('genre');
+         $table->string('release');
+         $table->integer('artist_id')->unsigned();
+         $table->foreign('artist_id')->references('id')->on('artists');
             //$table->foreing('genre')->references('name')->on('genres');
             //$table->foreing('release')->references('title')->on('releases');
-            $table->timestamps();
+         $table->timestamps();
         });
     }
 

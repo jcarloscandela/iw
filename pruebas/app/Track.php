@@ -10,6 +10,10 @@ class Track extends Model
       'title', 'bpm', 'key', 'duration', 'price'
   ];
 
+  public function artist() {
+    return $this->belongsTo('Artist');
+  }
+  
   public function release() {
     return $this->belongsTo('Release');
   }

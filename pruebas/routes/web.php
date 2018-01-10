@@ -33,3 +33,12 @@ Route::get('/logged', function(){
 Route::get('/welcome', function(){
   return view('welcome');
 });
+
+Route::get('/tracks', 'TracksController@index')->name('tracks.tabla');
+
+Route::get('/artists', 'ArtistController@index')->name('artist.tabla');
+
+Route::get('artist/{name}', 'ArtistController@show');/*function($name)
+{
+    echo $name;
+});*/

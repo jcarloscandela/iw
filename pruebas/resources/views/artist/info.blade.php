@@ -1,7 +1,9 @@
-@extends('layouts.app')
-@section('content')
+@extends('layout')
+@section('cabecera')
+<h1 style="margin:2%">{{$artist->name}}</h1>
+@endsection
+@section('contenido')
 <div class="">
-  <h1 style="margin:2%">{{$artist->name}}</h1>
   <div class="" style="padding-right:20%; padding-left:5%">
     <img src="{{ asset($artist->picture) }}" style="float:left; margin-right:5%" alt="">
     {{$artist->biography}}

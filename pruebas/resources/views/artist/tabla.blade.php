@@ -1,7 +1,10 @@
-@extends('layouts.app')
-@section('content')
+@extends('layout')
 
-    <h2>Artists</h2>
+@section('cabecera')
+<h1 style="margin:2%">Artists</h1>
+@endsection
+
+@section('contenido')
 
     <ol>
       @foreach($artists as $artist)

@@ -22,7 +22,7 @@
      <td>{{$track->bpm}}</td>
      <td>{{$track->key}}</td>
      <td>{{$track->duration}}</td>
-     <td>{{$track->price}}</td>
+     <td>{{$track->price}}€</td>
   </tr>
   @endforeach
   </tbody>

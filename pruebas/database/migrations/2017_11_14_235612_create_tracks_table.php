@@ -22,6 +22,8 @@ class CreateTracksTable extends Migration
             $table->float('price');
             $table->string('genre');
             $table->string('release');
+            $table->integer('artist_id')->unsigned();
+            $table->foreign('artist_id')->references('id')->on('artists');
             //$table->foreing('genre')->references('name')->on('genres');
             //$table->foreing('release')->references('title')->on('releases');
             $table->timestamps();

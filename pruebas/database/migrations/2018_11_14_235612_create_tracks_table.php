@@ -27,7 +27,7 @@ class CreateTracksTable extends Migration
             $table->foreign('artist_id')->references('id')->on('artists');
            
             //$table->foreing('release')->references('title')->on('releases');
-            $table->timestamps();
+         $table->timestamps();
         });
 
         /*

@@ -1,35 +1,3 @@
-<!-- <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Proyecto con Laravel</title>
-    {{HTML::style('css/bootstrap.css')}}
-    {{HTML::style('css/app.css')}}
-    @yield('css')
-
-    {{HTML::script('js/jquery-3.2.1.js')}}
-    {{HTML::script('js/bootstrap.min.js')}}
-
-    @yield('head')
-    <script type="text/javascript">
-      @yield('js')
-    </script>
-  </head>
-  <body>
-    <header>
-      <h1>Bienvenido a nuestro proyecto</h1>
-      <h3>{{$donde}}</h3>
-    </header>
-    @include('menu')
-    <main>
-      @yield('contenido')
-    </main>
-    <footer>
-      &copy; 2017 IW.ua.es
-    </footer>
-  </body>
-</html> -->
-
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
 <head>
@@ -78,14 +46,15 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav navbar">
                         &nbsp;
-                        <li> <a href="#">tracks</a></li>
+                        <li> <a href="{{url('tracks')}}">tracks</a></li>
+                        <li> <a href="{{url('artists')}}">artists</a></li>
                         <li class="dropdown">
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                               genres <span class="caret"></span>
                           </a>
                           <ul class="dropdown-menu" role="menu" >
                             <?php foreach (App\Genre::all() as $g): ?>
-                              <li><a href="{{url('/genres/').'/'.$g->name}}">{{$g->name}}</a></li>
+                              <li><a href="{{url('genres').'/'.$g->name}}">{{$g->name}}</a></li>
                             <?php endforeach; ?>
                           </ul>
                         </li>
@@ -122,12 +91,10 @@
                 </div>
             </div>
         </nav>
-        @yield('content')
         <header>
-          <h1>Bienvenido a nuestro proyecto</h1>
-          <h3>{{$donde}}</h3>
+          @yield('cabecera')
         </header>
-        @include('menu')
+          <!-- @include('menu') -->
         <main>
           @yield('contenido')
         </main>

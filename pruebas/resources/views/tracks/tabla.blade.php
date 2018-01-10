@@ -1,5 +1,10 @@
-@extends('layouts.app')
-@section('content')
+@extends('layout')
+
+@section('cabecera')
+<h1 style="margin:2%">Tracks</h1>
+@endsection
+
+@section('contenido')
 
 <table class="table">
   <thead class="thead-dark">
@@ -17,12 +22,17 @@
   @foreach($tracks as $track)
   <tr>
      <td>{{$track->title}}</td>
-     <td>TODO Artist</td>
-     <td>TODO genre</td>
+     <?php
+        $artist = $artist = DB::table('artists')
+                       ->where('id', $track->artist_id)
+                       ->get()->first();
+      ?>
+     <td>{{$artist->name}}</td>
+     <td>{{$track->genre}}</td>
      <td>{{$track->bpm}}</td>
      <td>{{$track->key}}</td>
      <td>{{$track->duration}}</td>
-     <td>{{$track->price}}€</td>
+     <td>{{$track->price}}</td>
   </tr>
   @endforeach
   </tbody>

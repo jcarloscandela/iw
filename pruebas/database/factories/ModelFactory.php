@@ -40,14 +40,14 @@ $factory->define(App\agenda::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(App\Artist::class, function (Faker\Generator $faker) {
-    return [
-        //
-        'name' => $faker->name,
-        'picture' => str_random(15),//str_random(10).'@gmail.com',
-        'biography' => str_random(20),
-    ];
-});
+// $factory->define(App\Artist::class, function (Faker\Generator $faker) {
+//     return [
+//         //
+//         'name' => $faker->name,
+//         'picture' => str_random(15),//str_random(10).'@gmail.com',
+//         'biography' => str_random(20),
+//     ];
+// });
 
 
 

@@ -22,9 +22,9 @@
       @yield('js')
     </script>
 </head>
-<body>
+<body class="modal-content">
     <div id="app">
-        <nav class="navbar navbar-default navbar-static-top">
+        <nav class="navbar-inverse navbar-default navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
 
@@ -59,7 +59,12 @@
                           </ul>
                         </li>
                     </ul>
-
+                    <form class="navbar-form navbar-left" action="/action_page.php">
+                      <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                      </div>
+                      <button type="submit" class="btn btn-default">Submit</button>
+                    </form>
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
@@ -98,7 +103,7 @@
         <main>
           @yield('contenido')
         </main>
-        <footer>
+        <footer  style="text-align:center;">
           &copy; 2017 IW.ua.es
         </footer>
     </div>

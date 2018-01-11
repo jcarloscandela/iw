@@ -3,12 +3,22 @@
 <h1 style="margin:2%">{{$artist->name}}</h1>
 @endsection
 @section('contenido')
-<div class="">
+<!-- <div class="">
   <div class="" style="padding-right:20%; padding-left:5%">
-    <img src="{{ asset($artist->picture) }}" style="float:left; margin-right:5%" alt="">
-    {{$artist->biography}}
+
+
   </div>
-</div>
+</div> -->
+<div class="media" style="padding-right:20%; padding-left:2%">
+    <div class="media-left">
+      <img src="{{ asset($artist->picture) }}" alt="profile pic" class="media-object " style="margin-right:5%">
+      <!--  -->
+    </div>
+    <div class="media-body">
+      <p>{{$artist->biography}}</p>
+    </div>
+  </div>
+  <hr>
 
 
 

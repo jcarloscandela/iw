@@ -26,8 +26,9 @@
         $artist = $artist = DB::table('artists')
                        ->where('id', $track->artist_id)
                        ->get()->first();
+        $aux = str_replace(" ", "_", $artist->name)
       ?>
-     <td>{{$artist->name}}</td>
+     <td><a href="{{url('artist')}}/{{$aux}}">{{$artist->name}}</a> </td>
      <td>{{$track->genre}}</td>
      <td>{{$track->bpm}}</td>
      <td>{{$track->key}}</td>

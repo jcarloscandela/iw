@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Artist;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
 
 class ArtistController extends Controller
 {
@@ -36,6 +37,7 @@ class ArtistController extends Controller
       $tracks = DB::table('tracks')
                      ->where('artist_id', $artist->id)
                      ->get();
+      // URL::to('/artist/'.$nameArtist);
       return view('artist.info', compact('artist', 'tracks'));
       //return view('artist.info')->with('artist', $artist);
     }
@@ -43,5 +45,10 @@ class ArtistController extends Controller
     public function index(){
         $artists = Artist::All();
         return view('artist.tabla', compact('artists'));
+    }
+
+    public function changeUrl($name){
+      $nameArtist = str_replace("_", " ", $name);
+      return redirect(url('artist').'/'.$nameArtist);
     }
 }

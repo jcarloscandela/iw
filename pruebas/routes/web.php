@@ -38,7 +38,12 @@ Route::get('/tracks', 'TracksController@index')->name('tracks.tabla');
 
 Route::get('/artists', 'ArtistController@index')->name('artist.tabla');
 
-Route::get('artist/{name}', 'ArtistController@show');/*function($name)
-{
-    echo $name;
-});*/
+Route::get('artist/{name}', 'ArtistController@show');
+
+Route::get('genres/{name}', 'TracksController@showByGenre');
+
+Route::get('edit_tracks', 'EditController@tracks')->middleware('auth');
+Route::get('edit_artists', 'EditController@artists')->middleware('auth');
+Route::get('edit_genres', 'EditController@genres')->middleware('auth');
+
+Route::post('created', 'ArtistController@create');

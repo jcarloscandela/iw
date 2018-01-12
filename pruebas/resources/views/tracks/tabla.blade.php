@@ -2,10 +2,16 @@
 
 @section('cabecera')
 <h1 style="margin:2%">Tracks</h1>
+<script src="./js/audio.min.js"></script>
 @endsection
 
 @section('contenido')
 
+<script>
+  audiojs.events.ready(function() {
+    var as = audiojs.createAll();
+  });
+</script>
 <table class="table">
   <thead class="thead-dark">
     <tr>
@@ -21,7 +27,7 @@
   <tbody>
   @foreach($tracks as $track)
   <tr>
-     <td>{{$track->title}}</td>
+     <td>{{$track->title}} <audio src="./mp3/juicy.mp3" preload="none" ></audio></td>
      <?php
         $artist = $artist = DB::table('artists')
                        ->where('id', $track->artist_id)
@@ -33,7 +39,7 @@
      <td>{{$track->bpm}}</td>
      <td>{{$track->key}}</td>
      <td>{{$track->duration}}</td>
-     <td>{{$track->price}}</td>
+     <td>{{$track->price}}€</td>
   </tr>
   @endforeach
   </tbody>

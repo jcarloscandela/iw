@@ -23,7 +23,7 @@
     </script>
 </head>
 <body class="modal-content">
-    <div id="app">
+    <div id="app" style="">
         <nav class="navbar-inverse navbar-default navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
@@ -59,7 +59,7 @@
                           </ul>
                         </li>
                     </ul>
-                    <form class="navbar-form navbar-left" action="/action_page.php">
+                    <form class="navbar-form navbar-left" action="/action_page.php" style="">
                       <div class="form-group">
                         <input type="text" class="form-control" placeholder="Search">
                       </div>
@@ -89,6 +89,13 @@
                                             {{ csrf_field() }}
                                         </form>
                                     </li>
+                                    <li><a href="{{url('pedidos')}}">Mis pedidos</a> </li>
+                                    <li><a href="{{url('listas')}}">Mis listas</a> </li>
+                                    <?php if (Auth::user()->name == 'admin'): ?>
+                                      <li><a href="{{url('edit_artists')}}">Gestionar artistas</a> </li>
+                                      <li><a href="{{url('edit_tracks')}}">Gestionar tracks</a> </li>
+                                      <li><a href="{{url('edit_genres')}}">Gestionar géneros</a> </li>
+                                    <?php endif; ?>
                                 </ul>
                             </li>
                         @endif
@@ -103,11 +110,11 @@
         <main>
           @yield('contenido')
         </main>
-        <footer  style="text-align:center;">
-          &copy; 2017 IW.ua.es
-        </footer>
-    </div>
 
+    </div>
+    <footer  class="text-center" style="text-align:center; background:black; width:100%; position:fixed; bottom:0">
+      &copy; 2017 IW.ua.es
+    </footer>
     <!-- Scripts -->
     <!-- <script src="{{ asset('js/app.js') }}"></script> -->
 </body>

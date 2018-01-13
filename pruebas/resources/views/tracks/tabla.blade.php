@@ -35,7 +35,13 @@
         $aux = str_replace(" ", "_", $artist->name)
       ?>
      <td><a href="{{url('artist')}}/{{$aux}}">{{$artist->name}}</a> </td>
-     <td>{{$track->genre}}</td>
+     <?php
+        $genre = $genre = DB::table('genres')
+                       ->where('id', $track->genre_id)
+                       ->get()->first();
+       
+      ?>
+     <td>{{$genre->name}}</td>
      <td>{{$track->bpm}}</td>
      <td>{{$track->key}}</td>
      <td>{{$track->duration}}</td>

@@ -38,7 +38,7 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
+                        {{ config('app.name', 'Beatport') }}
                     </a>
                 </div>
 
@@ -46,15 +46,15 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav navbar">
                         &nbsp;
-                        <li> <a href="{{url('tracks')}}">tracks</a></li>
-                        <li> <a href="{{url('artists')}}">artists</a></li>
+                        <li> <a href="{{url('tracks')}}">Tracks</a></li>
+                        <li> <a href="{{url('artists')}}">Artists</a></li>
                         <li class="dropdown">
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                              genres <span class="caret"></span>
+                              Genres <span class="caret"></span>
                           </a>
                           <ul class="dropdown-menu" role="menu" >
                             <?php foreach (App\Genre::all() as $g): ?>
-                              <li><a href="{{url('genres').'/'.$g->name}}">{{$g->name}}</a></li>
+                              <li><a href="{{url('genres').'/'.$g->id}}">{{$g->name}}</a></li>
                             <?php endforeach; ?>
                           </ul>
                         </li>

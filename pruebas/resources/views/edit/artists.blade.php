@@ -69,7 +69,7 @@ html, body {
     </div>
     <div role="tabpanel" class="tab-pane" id="update">
       <div class="form-group container" style="margin-top:10px">
-        {!! Form::open(['style' => "padding:5%; width:50%", 'class' => "center-block fill", 'action' => "ArtistController@create",'files' => true]) !!}
+        {!! Form::open(['style' => "padding:5%; width:50%", 'class' => "center-block fill", 'action' => "ArtistController@update",'files' => true]) !!}
           <div class="form-group">
             <label for="sel1">Select list:</label>
             <select class="form-control" id="sel1" name="nameArtist" style="width:300px" onchange="">
@@ -94,7 +94,30 @@ html, body {
         </form>
       </div>
     </div>
-    <div role="tabpanel" class="tab-pane" id="delete">...</div>
+    <div role="tabpanel" class="tab-pane" id="delete">
+      <table class="table-condensed table-hover" style="width:50%">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col" style="">Picture</th>
+            <th scope="col" style="">Artist</th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach ($artists as $artist)
+            <tr>
+              <td> <img src="{{$artist->picture}}" alt="" height="35px" width="60px" id="pic "name="pic"> </td>
+              <td><label>{{$artist->name}}</label></td>
+              <td>
+                {!! Form::open(['action' => "ArtistController@delete",'files' => true]) !!}
+                  <input type="hidden" name="name" id="name" value="{{$artist->name}}" ></input>
+                  <button type="submit" class="btn btn-primary" name="button">Delete</button>
+                </form>
+              </td>
+            </tr>
+          @endforeach
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 

@@ -15,13 +15,13 @@
 <table class="table">
   <thead class="thead-dark">
     <tr>
-      <th scope="col">Title</th>
-      <th scope="col">Artist</th>
-      <th scope="col">Genre</th>
-      <th scope="col">BPM</th>
-      <th scope="col">Key</th>
-      <th scope="col">Duration</th>
-      <th scope="col">Price</th>
+      <th scope="col" width="35%">Title</th>
+      <th scope="col" width="15%">Artist</th>
+      <th scope="col" width="10%">Genre</th>
+      <th scope="col" width="10%">BPM</th>
+      <th scope="col" width="10%">Key</th>
+      <th scope="col" width="10%">Duration</th>
+      <th scope="col" width="10%">Price</th>
     </tr>
   </thead>
   <tbody>

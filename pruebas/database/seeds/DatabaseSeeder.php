@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Genre;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,7 +17,11 @@ class DatabaseSeeder extends Seeder
         //$this->call(PersonasTableSeeder::class);
       //$this->call(AgendaTableSeeder::class);
       $this->call(ArtistsTableSeeder::class);
-      $this->call(TracksTableSeeder::class);
       $this->call(GenresTableSeeder::class);
+      $this->call(TracksTableSeeder::class);
+      DB::table('users')->insert([
+        'name' => 'admin',
+        'email' => 'admin@admin.com',
+        'password' => bcrypt('admin')]);
     }
 }

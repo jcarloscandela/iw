@@ -15,9 +15,13 @@ class TracksController extends Controller
     }
 
    public function showByGenre($genre){
+     $genre_id = DB::table('genres')
+                    ->where('name', $genre)
+                    ->get()->first();
      $tracks = DB::table('tracks')
-                    ->where('genre', $genre)
+                    ->where('genre_id', $genre_id->id)
                     ->get();
+
      return view('tracks.tabla', compact('tracks'));
    }
 }

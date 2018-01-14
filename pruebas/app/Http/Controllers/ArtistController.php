@@ -66,4 +66,8 @@ class ArtistController extends Controller
         return redirect()->back()->with('alert', 'Error! Some input is empty, please fill them all');
       }
     }
+
+    public function update(Request $request){
+        return back();
+    }
 }

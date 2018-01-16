@@ -19,11 +19,7 @@ class TracksController extends Controller
                     ->where('name', $genre)
                     ->get()->first();
      $tracks = DB::table('tracks')
-<<<<<<< HEAD
                     ->where('genre_id', $genre)
-=======
-                    ->where('genre_id', $genre_id->id)
->>>>>>> Guille
                     ->get();
 
      return view('tracks.tabla', compact('tracks'));

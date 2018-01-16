@@ -13,6 +13,7 @@ class CreateCartTable extends Migration
      */
     public function up()
     {
+        Schema::create('cart', function(Blueprint $table){
         $table->increments('id');
         $table->integer('track_id')->unsigned();
         $table->foreign('track_id')->references('id')->on('tracks');
@@ -20,7 +21,8 @@ class CreateCartTable extends Migration
         $table->foreign('user_id')->references('id')->on('users');
        
         //$table->foreing('release')->references('title')->on('releases');
-     $table->timestamps();
+         $table->timestamps();
+        });
     }
 
     /**

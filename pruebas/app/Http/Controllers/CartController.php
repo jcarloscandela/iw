@@ -15,6 +15,11 @@ class CartController extends Controller
         return view('cart.tabla', compact('tracks'));
     }
 
+    public function create(Request $request){
+        DB::table('cart')->insert(['track_id' => $request->input('track_id'),'user_id' => $request->input('user_id')]);
+        return back()->with('success','Track added successfully to user cart');
+    }
+
     public function addTrack($track_id, $user_id){
         return Cart::create([
             'track_id' => $track_id,

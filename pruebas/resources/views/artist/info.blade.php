@@ -41,7 +41,6 @@
                      ->where('id', $track->genre_id)
                      ->get()->first(); ?>
        <td>{{$track->title}}</td>
-<<<<<<< HEAD
         <?php
           $genre = $genre = DB::table('genres')
                         ->where('id', $track->genre_id)
@@ -49,9 +48,6 @@
         
         ?>
       <td>{{$genre->name}}</td>
-=======
-       <td>{{$genre->name}}</td>
->>>>>>> Guille
        <td>{{$track->bpm}}</td>
        <td>{{$track->key}}</td>
        <td>{{$track->duration}}</td>

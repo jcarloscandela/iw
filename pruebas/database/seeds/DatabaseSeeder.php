@@ -19,12 +19,9 @@ class DatabaseSeeder extends Seeder
       $this->call(ArtistsTableSeeder::class);
       $this->call(GenresTableSeeder::class);
       $this->call(TracksTableSeeder::class);
-<<<<<<< HEAD
-=======
       DB::table('users')->insert([
         'name' => 'admin',
         'email' => 'admin@admin.com',
         'password' => bcrypt('admin')]);
->>>>>>> Guille
     }
 }

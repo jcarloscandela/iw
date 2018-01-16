@@ -66,4 +66,12 @@ class ArtistController extends Controller
         return redirect()->back()->with('alert', 'Error! Some input is empty, please fill them all');
       }
     }
+
+    public function update(Request $request){
+        return back();
+    }
+    public function delete(Request $request){
+      $name = $request->input('name');
+      DB::table('artists')->where('name', '=', $name)->delete();
+    }
 }

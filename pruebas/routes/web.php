@@ -46,8 +46,17 @@ Route::get('artist/{name}', 'ArtistController@show');
 
 Route::get('genres/{name}', 'TracksController@showByGenre');
 
-Route::get('edit_tracks', 'EditController@tracks')->middleware('auth');
-Route::get('edit_artists', 'EditController@artists')->middleware('auth');
+Route::any('edit_tracks', 'EditController@tracks')->middleware('auth');
+Route::any('edit_artists', 'EditController@artists')->middleware('auth');
+Route::any('edit_artists/delete', 'ArtistController@delete');
 Route::get('edit_genres', 'EditController@genres')->middleware('auth');
 
-Route::post('created', 'ArtistController@create');
+Route::any('ArtistCreated', 'ArtistController@create');
+Route::any('ArtistUpdated', 'ArtistController@update');
+Route::any('ArtistDeleted', 'ArtistController@delete');
+Route::any('TrackCreated', 'TracksController@create');
+Route::any('TrackUpdated', 'TracksController@update');
+Route::any('TrackDeleted', 'TracksController@delete');
+Route::any('GenreCreated', 'GenresController@create');
+Route::any('GenreUpdated', 'GenresController@update');
+Route::any('GenreDeleted', 'GenresController@delete');

@@ -3,6 +3,7 @@
 @section('cabecera')
 <h1 style="margin:2%">Tracks</h1>
 <script src="./js/audio.min.js"></script>
+
 @endsection
 
 @section('contenido')
@@ -45,7 +46,7 @@
      <td>{{$track->bpm}}</td>
      <td>{{$track->key}}</td>
      <td>{{$track->duration}}</td>
-     <td>{{$track->price}}€</td>
+     <td><button type="button" method="POST" class="btn" style="background:#ff53a0; color:#fff;" >{{$track->price}}€</button></td>
   </tr>
   @endforeach
   </tbody>

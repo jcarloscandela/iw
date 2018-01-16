@@ -38,6 +38,10 @@ Route::get('/tracks', 'TracksController@index')->name('tracks.tabla');
 
 Route::get('/artists', 'ArtistController@index')->name('artist.tabla');
 
+Route::get('/cart', 'CartController@showCart')->name('cart.tabla');
+Route::post('/cart', 'CartController@addTrack');
+
+
 Route::get('artist/{name}', 'ArtistController@show');
 
 Route::get('genres/{name}', 'TracksController@showByGenre');

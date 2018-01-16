@@ -91,6 +91,7 @@
                                     </li>
                                     <li><a href="{{url('pedidos')}}">Mis pedidos</a> </li>
                                     <li><a href="{{url('listas')}}">Mis listas</a> </li>
+                                    <li><a href="{{url('cart')}}">My cart</a> </li>
                                     <?php if (Auth::user()->name == 'admin'): ?>
                                       <li><a href="{{url('edit_artists')}}">Gestionar artistas</a> </li>
                                       <li><a href="{{url('edit_tracks')}}">Gestionar tracks</a> </li>

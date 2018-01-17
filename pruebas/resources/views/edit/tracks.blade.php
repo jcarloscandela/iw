@@ -15,10 +15,20 @@
     <li role="presentation"><a href="#update" aria-controls="profile" role="tab" data-toggle="tab">Update</a></li>
     <li role="presentation"><a href="#delete" aria-controls="messages" role="tab" data-toggle="tab">Delete</a></li>
   </ul>
-
+  <div class="" style="">
+    @if ($errors->any())
+      <div class="alert alert-danger">
+        <ul>
+          @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+          @endforeach
+        </ul>
+      </div>
+    @endif
+  </div>
   <!-- Tab panes -->
   <div class="tab-content fill">
-    <div role="tabpanel" class="tab-pane active" id="create">
+    <div role="tabpanel" class="tab-pane active" style="" id="create">
       @if (session('alert'))
           <div class="alert alert-danger text-center" id="alert" name="alert">
               {{ session('alert') }}
@@ -53,11 +63,11 @@
         </div>
         <div class="form-group" >
           <label for="duration">Duration</label>
-          <input type="text"name="duration" class="form-control " id="duration" aria-describedby="titleHelp">
+          <input type="text"name="duration" class="form-control " id="duration" aria-describedby="durationHelp" placeholder="hh:mm:ss">
         </div>
         <div class="form-group" >
           <label for="price">Price</label>
-          <input type="text"name="price" class="form-control " id="price" aria-describedby="titleHelp" placeholder="Enter track's title">
+          <input type="text"name="price" class="form-control " id="price" aria-describedby="titleHelp" placeholder="9.02">
         </div>
         <div class="form-group" >
           <label for="selGenre">Genre</label>
@@ -88,9 +98,50 @@
       ...
     </div>
     <div role="tabpanel" class="tab-pane" id="delete">
-      ...
+      <table class="table-condensed table-hover" style="width:50%">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col" width="35%">Title</th>
+            <th scope="col" width="15%">Artist</th>
+            <th scope="col" width="10%">Genre</th>
+            <th scope="col" width="10%">BPM</th>
+            <th scope="col" width="10%">Key</th>
+            <th scope="col" width="10%">Duration</th>
+            <th scope="col" width="10%">Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach($tracks as $track)
+          <tr>
+             <?php
+                $artist = $artist = DB::table('artists')
+                               ->where('id', $track->artist_id)
+                               ->get()->first();
+                $aux = str_replace(" ", "_", $artist->name);
+                $genre = $genre = DB::table('genres')
+                               ->where('id', $track->genre_id)
+                               ->get()->first();
+              ?>
+             <td>{{$track->title}}</td>
+             <td><a href="{{url('artist')}}/{{$aux}}">{{$artist->name}}</a> </td>
+             <td>{{$genre->name}}</td>
+             <td>{{$track->bpm}}</td>
+             <td>{{$track->key}}</td>
+             <td>{{$track->duration}}</td>
+             <td>{{$track->price}}€</td>
+             <td>
+               {!! Form::open(['action' => "TracksController@delete",'class' => "center-block fill"]) !!}
+                 <input type="hidden" name="id" id="id" value="{{$track->id}}" ></input>
+                 <button type="submit" class="btn btn-primary" name="button">Delete</button>
+               </form>
+             </td>
+          </tr>
+          @endforeach
+        </tbody>
+      </table>
     </div>
   </div>
+
 </div>
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
   <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>

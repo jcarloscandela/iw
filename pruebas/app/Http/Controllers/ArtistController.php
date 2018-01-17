@@ -49,9 +49,11 @@ class ArtistController extends Controller
     }
 
     public function create(Request $request){
-      //dd($request->all());
-
-    //  return back()->with('success','Image Upload successful');
+      $this->validate($request, [
+        'name' => 'required|max:255',
+        'biography' => 'required',
+        'picture' => 'required|image|max:1024',
+      ]);
       if($request->hasFile('picture')){
   			$file = $request->file('picture');
   			$file->move('imgs', $file->getClientOriginalName());
@@ -68,7 +70,11 @@ class ArtistController extends Controller
     }
 
     public function update(Request $request){
-        $id_artist = DB::table('artists')
+      $this->validate($request, [
+        'biography' => 'required',
+        'picture' => 'required|image|max:1024',
+      ]);
+      $id_artist = DB::table('artists')
                       ->where('name', '=', $request->input('nameArtist'))
                       ->get()->first()->id;
       // dd($id_artist);

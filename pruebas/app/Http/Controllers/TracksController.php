@@ -26,6 +26,14 @@ class TracksController extends Controller
    }
 
    public function create(Request $request){
+     $this->validate($request, [
+       'title' => 'required|max:255',
+       'bpm' => 'required|numeric',
+       'key' => 'required|alpha|max:1',
+       'duration' => 'required|regex:[([0-9]{2})(\:)([0-9]{2})(\:)([0-9]{2})]',
+       'price' => 'required|numeric',
+       'date' => 'required|date',
+     ]);
      $title = $request->input('title');
      $bpm = $request->input('bpm');
      $key = $request->input('key');
@@ -50,5 +58,11 @@ class TracksController extends Controller
           'artist_id' => $artist->id]
      );
      return back()->with('success','Track added successfully');
+   }
+   public function delete(Request $request){
+     $track = $request->input('id');
+     // dd($track);
+     DB::table('tracks')->where('id', '=', "".$track)->delete();
+     return back()->with('success','Artist deleted successfully');
    }
 }

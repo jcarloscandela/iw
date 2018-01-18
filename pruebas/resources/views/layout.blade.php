@@ -59,9 +59,10 @@
                           </ul>
                         </li>
                     </ul>
-                    <form class="navbar-form navbar-left" action="/action_page.php" style="">
+                    <form class="navbar-form navbar-left" action="search" method="POST" style="">
+                      <input type="hidden" name="_token" value="{{ csrf_token() }}">
                       <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
+                        <input type="text" class="form-control" name="search" placeholder="Search">
                       </div>
                       <button type="submit" class="btn btn-default">Submit</button>
                     </form>
@@ -91,6 +92,7 @@
                                     </li>
                                     <li><a href="{{url('pedidos')}}">Mis pedidos</a> </li>
                                     <li><a href="{{url('listas')}}">Mis listas</a> </li>
+                                    <li><a href="{{url('cart')}}">My cart</a> </li>
                                     <?php if (Auth::user()->name == 'admin'): ?>
                                       <li><a href="{{url('edit_artists')}}">Gestionar artistas</a> </li>
                                       <li><a href="{{url('edit_tracks')}}">Gestionar tracks</a> </li>

@@ -15,19 +15,21 @@
 <table class="table">
   <thead class="thead-dark">
     <tr>
-      <th scope="col">Title</th>
-      <th scope="col">Artist</th>
-      <th scope="col">Genre</th>
-      <th scope="col">BPM</th>
-      <th scope="col">Key</th>
-      <th scope="col">Duration</th>
-      <th scope="col">Price</th>
+      <th scope="col" width="35%">Title</th>
+      <th scope="col" width="10%">Artist</th>
+      <th scope="col" width="10%">Genre</th>
+      <th scope="col" width="10%">BPM</th>
+      <th scope="col" width="10%">Key</th>
+      <th scope="col" width="10%">Duration</th>
+      <th scope="col" width="10%">Price</th>
+      <th scope="col" width="5%"></th>
     </tr>
   </thead>
   <tbody>
   <?php
   $tracksCart =  DB::table('tracks')
   ->join('cart', 'tracks.id', '=', 'cart.track_id')
+  ->where('user_id', Auth::user()->id)
   ->get();
    ?>
   @foreach($tracksCart as $track)
@@ -53,29 +55,13 @@
      <td>{{$track->bpm}}</td>
      <td>{{$track->key}}</td>
      <td>{{$track->duration}}</td>
-
-
+     <td>{{$track->price}}</td>
      <td>
-     <?php
-
-        $carrito = DB::table('cart')
-                      ->where('track_id', $track->id)
-                      ->where('user_id', Auth::user()->id)
-                      ->count();
-        if($carrito != 1){
-          $mostrar=true;
-        }else{
-          $mostrar=false;
-        }
-
-      ?>
-     <form method="POST" action="{{url('/cart')}}">
-                                            <input type="hidden" name="track_id" value="{{$track->id}}">
-                                            <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-     @if ($mostrar)<button type="submit" class="btn" style="background:#ff53a0; color:#fff;" >{{$track->price}}€</button>
-     @else <button type="submit" disabled class="btn" style="background:#ff53a0; color:#fff;" >You have the track on the cart</button>
-     @endif
+      {!! Form::open(['action' => "CartController@deleteTrack",'class' => "center-block fill"]) !!}
+         <input type="hidden" name="id" id="id" value="{{$track->track_id}}" ></input>
+         <button type="submit" class="btn btn-primary" aria-label="Close">
+           <span style="font-size:20px" aria-hidden="true">&times;</span>
+         </button>
      </form>
      </td>
   </tr>

@@ -49,9 +49,11 @@ class ArtistController extends Controller
     }
 
     public function create(Request $request){
-      //dd($request->all());
-
-    //  return back()->with('success','Image Upload successful');
+      $this->validate($request, [
+        'name' => 'required|max:255',
+        'biography' => 'required',
+        'picture' => 'required|image|max:1024',
+      ]);
       if($request->hasFile('picture')){
   			$file = $request->file('picture');
   			$file->move('imgs', $file->getClientOriginalName());
@@ -68,10 +70,37 @@ class ArtistController extends Controller
     }
 
     public function update(Request $request){
-        return back();
+      $this->validate($request, [
+        'biography' => 'required',
+        'picture' => 'required|image|max:1024',
+      ]);
+      $id_artist = DB::table('artists')
+                      ->where('name', '=', $request->input('nameArtist'))
+                      ->get()->first()->id;
+      // dd($id_artist);
+      /*if($request->has('name')){
+        DB::table('artists')
+                  ->where('id', $id_artist)
+                  ->update(['name' => $request->input('name')]);
+      }*/
+      if($request->has('biography')){
+        DB::table('artists')
+                  ->where('id', $id_artist)
+                  ->update(['biography' => $request->input('biography')]);
+      }
+      if($request->hasFile('picture') && $request->file('picture')->isValid()){
+        $file = $request->file('picture');
+  			$file->move('imgs', $file->getClientOriginalName());
+
+        DB::table('artists')
+                  ->where('id', $id_artist)
+                  ->update(['picture' => 'imgs/'.$file->getClientOriginalName()]);
+      }
+      return back()->with('success', 'Artist updated successfully');
     }
     public function delete(Request $request){
       $name = $request->input('name');
-      DB::table('artists')->where('name', '=', $name)->first()->delete();
+      DB::table('artists')->where('name', '=', $name)->delete();
+      return back()->with('success','Artist deleted successfully');
     }
 }

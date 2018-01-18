@@ -3,7 +3,6 @@
 @section('cabecera')
 <h1 style="margin:2%">Tracks</h1>
 <script src="./js/audio.min.js"></script>
-
 @endsection
 
 @section('contenido')
@@ -39,50 +38,38 @@
                        ->get()->first();
       ?>
      <td><a href="{{url('artist')}}/{{$aux}}">{{$artist->name}}</a> </td>
-     <?php
-        $genre = $genre = DB::table('genres')
-                       ->where('id', $track->genre_id)
-                       ->get()->first();
-       
-      ?>
      <td>{{$genre->name}}</td>
      <td>{{$track->bpm}}</td>
      <td>{{$track->key}}</td>
      <td>{{$track->duration}}</td>
 
-  
      <td>
-     <?php
-       
-        $carrito = DB::table('cart')
-                      ->where('track_id', $track->id)
-                      ->where('user_id', Auth::user()->id)
-                      ->count();
-        if($carrito != 1){
-          $mostrar=true;
-        }else{
-          $mostrar=false;
-        }
-        
-      ?>
-     <form method="POST" action="{{url('/cart')}}">
-                                            <input type="hidden" name="track_id" value="{{$track->id}}">
-                                            <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-     @if ($mostrar)<button type="submit" class="btn" style="background:#ff53a0; color:#fff;" >{{$track->price}}€</button>
-     @else <button type="submit" disabled class="btn" style="background:#ff53a0; color:#fff;" >You have the track on the cart</button>
-     @endif
-     </form>
+       <?php
 
-     @if ($mostrar == false)
-     <form method="DELETE" action="{{url('/cart')}}">
-     <button type="submit" class="btn" style="background:#ff53a0; color:#fff;" >X</button>
-                                            <input type="hidden" name="track_id" value="{{$track->id}}">
-                                            <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-                                           <input type="hidden" name="_token" value="{{ csrf_token() }}">
-    </form>
-    @endif
-     </td>
+          $carrito = DB::table('cart')
+                        ->where('track_id', $track->id)
+                        ->where('user_id', Auth::user()->id)
+                        ->count();
+          if($carrito != 1){
+            $mostrar=true;
+          }else{
+            $mostrar=false;
+          }
+
+        ?>
+      
+         @if ($mostrar)
+         <form method="POST" action="{{url('/cart')}}">
+          <input type="hidden" name="track_id" value="{{$track->id}}">
+          <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+          <input type="hidden" name="_token" value="{{ csrf_token() }}">
+         <button type="submit" class="btn" style="background:#ff53a0; color:#fff;" >{{$track->price}}€</button>
+         </form>
+         @else 
+         <button disabled class="btn" style="background:#ff53a0; color:#fff;" >You have the track on the cart</button>
+         @endif
+       
+    </td>
   </tr>
   @endforeach
   </tbody>

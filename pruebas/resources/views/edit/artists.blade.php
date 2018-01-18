@@ -10,15 +10,23 @@
     height: 100%;
     min-height: 100%;
 }
+body {                /* body - or any parent wrapper */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 
-html, body {
-    height: 100%;
+main {
+  flex: 1;
+}
+table{
+  margin-bottom: 30px;
 }
 </style>
 @endsection
 
 @section('contenido')
-<div>
+<div class="container fill" height="100%">
 
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist">
@@ -29,7 +37,7 @@ html, body {
 
   <!-- Tab panes -->
   <div class="tab-content fill">
-    <div role="tabpanel" class="tab-pane active" id="create">
+    <div role="tabpanel" class="tab-pane active" id="create" style="height:100%; min-height:100%;">
       @if (session('alert'))
           <div class="alert alert-danger text-center" id="alert" name="alert">
               {{ session('alert') }}
@@ -108,7 +116,7 @@ html, body {
               <td> <img src="{{$artist->picture}}" alt="" height="35px" width="60px" id="pic "name="pic"> </td>
               <td><label>{{$artist->name}}</label></td>
               <td>
-                {!! Form::open(['action' => "ArtistController@delete",'files' => true]) !!}
+                {!! Form::open(['action' => "ArtistController@delete",'class' => "center-block fill"]) !!}
                   <input type="hidden" name="name" id="name" value="{{$artist->name}}" ></input>
                   <button type="submit" class="btn btn-primary" name="button">Delete</button>
                 </form>
@@ -119,6 +127,15 @@ html, body {
       </table>
     </div>
   </div>
+  @if ($errors->any())
+    <div class="alert alert-danger">
+      <ul>
+        @foreach ($errors->all() as $error)
+          <li>{{ $error }}</li>
+        @endforeach
+      </ul>
+    </div>
+  @endif
 </div>
 
 @endsection

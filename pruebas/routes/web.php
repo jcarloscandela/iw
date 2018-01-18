@@ -40,7 +40,7 @@ Route::get('/artists', 'ArtistController@index')->name('artist.tabla');
 
 Route::get('/cart', 'CartController@showCart')->name('cart.tabla');
 Route::post('/cart', 'CartController@create');
-Route::delete('/cart', 'CartController@delete');
+Route::post('/deleteCarTrack', 'CartController@deleteTrack');
 
 Route::get('artist/{name}', 'ArtistController@show');
 
@@ -50,6 +50,8 @@ Route::any('edit_tracks', 'EditController@tracks')->middleware('auth');
 Route::any('edit_artists', 'EditController@artists')->middleware('auth');
 Route::any('edit_artists/delete', 'ArtistController@delete');
 Route::get('edit_genres', 'EditController@genres')->middleware('auth');
+
+Route::post('/search','SearchController@search');
 
 Route::any('ArtistCreated', 'ArtistController@create');
 Route::any('ArtistUpdated', 'ArtistController@update');

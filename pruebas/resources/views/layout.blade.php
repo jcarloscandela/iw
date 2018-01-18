@@ -38,7 +38,7 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Beatport') }}
+                        {{ config('app.name', 'Laravel') }}
                     </a>
                 </div>
 
@@ -46,22 +46,23 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav navbar">
                         &nbsp;
-                        <li> <a href="{{url('tracks')}}">Tracks</a></li>
-                        <li> <a href="{{url('artists')}}">Artists</a></li>
+                        <li> <a href="{{url('tracks')}}">tracks</a></li>
+                        <li> <a href="{{url('artists')}}">artists</a></li>
                         <li class="dropdown">
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                              Genres <span class="caret"></span>
+                              genres <span class="caret"></span>
                           </a>
                           <ul class="dropdown-menu" role="menu" >
                             <?php foreach (App\Genre::all() as $g): ?>
-                              <li><a href="{{url('genres').'/'.$g->id}}">{{$g->name}}</a></li>
+                              <li><a href="{{url('genres').'/'.$g->name}}">{{$g->name}}</a></li>
                             <?php endforeach; ?>
                           </ul>
                         </li>
                     </ul>
-                    <form class="navbar-form navbar-left" action="/action_page.php" style="">
+                    <form class="navbar-form navbar-left" action="search" method="POST" style="">
+                      <input type="hidden" name="_token" value="{{ csrf_token() }}">
                       <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
+                        <input type="text" class="form-control" name="search" placeholder="Search">
                       </div>
                       <button type="submit" class="btn btn-default">Submit</button>
                     </form>

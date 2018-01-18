@@ -7,6 +7,7 @@ use View;
 use App\Cart;
 use Yajra\Datatables\Facades\Datatables;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
@@ -27,10 +28,10 @@ class CartController extends Controller
         ]);
     }
 
-    public function delete(Request $request){
-        $track_id = $request->input('track_id');
-        $user_id = $request->input('user_id');
-        DB::table('cart')->where('track_id', '=', $track_id)->where('user_id', '=', $user_id)->delete();
-        return back()->with('success','Track successfully deleted from the cart');
+    public function deleteTrack(Request $request){
+      $track = $request->input('id');
+      DB::table('cart')->where('track_id', $track)
+                       ->where('user_id', Auth::user()->id)->delete();
+      return back()->with('success','Track deleted successfully');
     }
 }

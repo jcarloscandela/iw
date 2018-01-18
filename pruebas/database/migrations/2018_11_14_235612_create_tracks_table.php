@@ -21,11 +21,11 @@ class CreateTracksTable extends Migration
             $table->time('duration');
             $table->float('price');
             $table->integer('genre_id')->unsigned();
-            $table->foreign('genre_id')->references('id')->on('genres');
+            $table->foreign('genre_id')->references('id')->on('genres')->onDelete('cascade')->onUpdate('cascade');
             $table->string('release');
             $table->integer('artist_id')->unsigned();
-            $table->foreign('artist_id')->references('id')->on('artists');
-           
+            $table->foreign('artist_id')->references('id')->on('artists')->onDelete('cascade')->onUpdate('cascade');
+
             //$table->foreing('release')->references('title')->on('releases');
          $table->timestamps();
         });
@@ -36,8 +36,8 @@ class CreateTracksTable extends Migration
         });*/
     }
 
-   
-    
+
+
     //2017_11_14_235612_create_tracks_table
     /**
      * Reverse the migrations.

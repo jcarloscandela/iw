@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Artist;
-use App\GEnre;
+use App\Genre;
+use App\Track;
 class EditController extends Controller
 {
     public function artists(){
@@ -15,7 +16,8 @@ class EditController extends Controller
     public function tracks(){
       $artists = Artist::All();
       $genres = Genre::All();
-      return view('edit.tracks', compact('artists', 'genres'));
+      $tracks = Track::All();
+      return view('edit.tracks', compact('artists', 'genres', 'tracks'));
     }
 
     public function genres(){

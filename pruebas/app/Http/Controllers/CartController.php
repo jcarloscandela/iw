@@ -26,4 +26,11 @@ class CartController extends Controller
             'user_id' => $user_id,
         ]);
     }
+
+    public function delete(Request $request){
+        $track_id = $request->input('track_id');
+        $user_id = $request->input('user_id');
+        DB::table('cart')->where('track_id', '=', $track_id)->where('user_id', '=', $user_id)->delete();
+        return back()->with('success','Track successfully deleted from the cart');
+    }
 }

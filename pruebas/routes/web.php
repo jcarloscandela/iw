@@ -40,7 +40,7 @@ Route::get('/artists', 'ArtistController@index')->name('artist.tabla');
 
 Route::get('/cart', 'CartController@showCart')->name('cart.tabla');
 Route::post('/cart', 'CartController@create');
-
+Route::delete('/cart', 'CartController@delete');
 
 Route::get('artist/{name}', 'ArtistController@show');
 

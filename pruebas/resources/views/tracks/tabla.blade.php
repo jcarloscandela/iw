@@ -73,6 +73,15 @@
      @else <button type="submit" disabled class="btn" style="background:#ff53a0; color:#fff;" >You have the track on the cart</button>
      @endif
      </form>
+
+     @if ($mostrar == false)
+     <form method="DELETE" action="{{url('/cart')}}">
+     <button type="submit" class="btn" style="background:#ff53a0; color:#fff;" >X</button>
+                                            <input type="hidden" name="track_id" value="{{$track->id}}">
+                                            <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                                           <input type="hidden" name="_token" value="{{ csrf_token() }}">
+    </form>
+    @endif
      </td>
   </tr>
   @endforeach

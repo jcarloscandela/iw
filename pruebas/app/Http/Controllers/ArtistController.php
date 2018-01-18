@@ -72,6 +72,6 @@ class ArtistController extends Controller
     }
     public function delete(Request $request){
       $name = $request->input('name');
-      DB::table('artists')->where('name', '=', $name)->delete();
+      DB::table('artists')->where('name', '=', $name)->first()->delete();
     }
 }

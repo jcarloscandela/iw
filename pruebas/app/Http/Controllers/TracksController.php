@@ -63,6 +63,6 @@ class TracksController extends Controller
      $track = $request->input('id');
      // dd($track);
      DB::table('tracks')->where('id', '=', "".$track)->delete();
-     return back()->with('success','Artist deleted successfully');
+     return back()->with('success','Track deleted successfully');
    }
 }

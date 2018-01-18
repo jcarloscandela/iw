@@ -42,7 +42,7 @@
      <td>{{$track->bpm}}</td>
      <td>{{$track->key}}</td>
      <td>{{$track->duration}}</td>
-
+     @if (!Auth::guest())
      <td>
        <?php
 
@@ -66,6 +66,13 @@
          @endif
        </form>
     </td>
+    @else
+      <td>
+        <form method="GET" action="login">
+          <button type="submit" class="btn" style="background:#ff53a0; color:#fff;" >{{$track->price}}€</button>
+        </form>
+      </td>
+    @endif
   </tr>
   @endforeach
   </tbody>

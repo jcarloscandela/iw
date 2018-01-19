@@ -31,5 +31,10 @@ class OrdersController extends Controller
         return back()->with('success','Track added successfully to user orders');
        
     }
+    public function showOrders(){
+        //$tracks = Track::All();
+        return view('orders.tabla', compact('tracks'));
+    }
+
 
 }

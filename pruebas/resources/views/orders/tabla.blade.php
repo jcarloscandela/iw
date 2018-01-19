@@ -21,18 +21,17 @@
       <th scope="col" width="10%">BPM</th>
       <th scope="col" width="10%">Key</th>
       <th scope="col" width="10%">Duration</th>
-      <th scope="col" width="10%">Price</th>
+      <th scope="col" width="10%">Download</th>
       <th scope="col" width="5%"></th>
     </tr>
   </thead>
   <tbody>
   <?php
   $tracksCart =  DB::table('tracks')
-  ->join('cart', 'tracks.id', '=', 'cart.track_id')
+  ->join('orders', 'tracks.id', '=', 'orders.track_id')
   ->where('user_id', Auth::user()->id)
   ->get();
-  $lista = [];
-  $lista2 = [];
+
   $totalprice = 0;
    ?>
   @foreach($tracksCart as $track)
@@ -47,8 +46,7 @@
                        ->where('id', $track->genre_id)
                        ->get()->first();
       
-                       array_push($lista,$track->track_id);
-                       array_push($lista2,$track->id);
+            
                       
         
       ?>
@@ -57,42 +55,13 @@
         $genre = $genre = DB::table('genres')
                        ->where('id', $track->genre_id)
                        ->get()->first();
-       $totalprice+=$track->price;
-
       ?>
      <td>{{$genre->name}}</td>
      <td>{{$track->bpm}}</td>
      <td>{{$track->key}}</td>
      <td>{{$track->duration}}</td>
-     <td>{{$track->price}}</td>
-     <td>
-      {!! Form::open(['action' => "CartController@deleteTrack",'class' => "center-block fill"]) !!}
-         <input type="hidden" name="id" id="id" value="{{$track->track_id}}" ></input>
-         <button type="submit" class="btn btn-primary" aria-label="Close">
-           <span style="font-size:20px" aria-hidden="true">&times;</span>
-         </button>
-      </form>
-     </td>
   </tr>
   @endforeach
   </tbody>
 </table>
-<table>
-  <tr>
-    <td><h1>Total price: {{$totalprice}}€</h1></td>
-    <td>
-    
-    <form method="POST" action="{{url('/orders')}}">
-          <input type="hidden" name="tracks_id" value="{{implode("a",$lista)}}">
-          <input type="hidden" name="cart_id" value="{{implode("c",$lista2)}}">
-          <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-          <input type="hidden" name="_token" value="{{ csrf_token() }}">
-         <button type="submit" class="btn" style="background:#ff53a0; color:#fff;" >Buy</button>
-         </form>
-    
-    </td>
-  </tr>
-</table>
-
-
 @stop

@@ -58,18 +58,34 @@
             }
             $auth=true;
         }
+
+        if(Auth::user()){
+          $isInOrders = DB::table('orders')
+                        ->where('track_id', $track->id)
+                        ->where('user_id', Auth::user()->id)
+                        ->count();
+          if($isInOrders != 0){
+            $mostrarOrders=false;
+          }else{
+            $mostrarOrders=true;
+          }
+      }
         ?>
         @if($auth)
-            @if ($mostrar)
-            <form method="POST" action="{{url('/cart')}}">
-              <input type="hidden" name="track_id" value="{{$track->id}}">
-              <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-              <input type="hidden" name="_token" value="{{ csrf_token() }}">
-            <button type="submit" class="btn" style="background:#ff53a0; color:#fff;" >{{$track->price}}€</button>
-            </form>
-            @else 
-            <button disabled class="btn" style="background:#ff53a0; color:#fff;" >You have the track on the cart</button>
-            @endif
+            @if($mostrarOrders)
+                @if ($mostrar)
+                <form method="POST" action="{{url('/cart')}}">
+                  <input type="hidden" name="track_id" value="{{$track->id}}">
+                  <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                  <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <button type="submit" class="btn" style="background:#ff53a0; color:#fff;" >{{$track->price}}€</button>
+                </form>
+                @else 
+                <button disabled class="btn" style="background:#ff53a0; color:#fff;" >You have the track on the cart</button>
+                @endif
+           @else
+           <button disabled class="btn" style="background:#ff53a0; color:#fff;" >You already bought the track</button>
+           @endif    
         @else
            <a href="{{url('/login')}}" class="btn" style="background:#ff53a0; color:#fff;" >{{$track->price}}€</button>
         @endif

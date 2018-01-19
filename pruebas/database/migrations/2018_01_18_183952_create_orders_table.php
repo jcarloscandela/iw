@@ -13,7 +13,16 @@ class CreateOrdersTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('orders', function(Blueprint $table){
+            $table->increments('id');
+            $table->integer('track_id')->unsigned();
+            $table->foreign('track_id')->references('id')->on('tracks');
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
+           
+            //$table->foreing('release')->references('title')->on('releases');
+             $table->timestamps();
+            });
     }
 
     /**
@@ -23,6 +32,6 @@ class CreateOrdersTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('orders');
     }
 }

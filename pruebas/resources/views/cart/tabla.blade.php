@@ -31,7 +31,8 @@
   ->join('cart', 'tracks.id', '=', 'cart.track_id')
   ->where('user_id', Auth::user()->id)
   ->get();
-
+  $lista = [];
+  $lista2 = [];
   $totalprice = 0;
    ?>
   @foreach($tracksCart as $track)
@@ -45,6 +46,11 @@
         $genre = $genre = DB::table('genres')
                        ->where('id', $track->genre_id)
                        ->get()->first();
+      
+                       array_push($lista,$track->track_id);
+                       array_push($lista2,$track->id);
+                      
+        
       ?>
      <td><a href="{{url('artist')}}/{{$aux}}">{{$artist->name}}</a> </td>
      <?php
@@ -75,14 +81,15 @@
   <tr>
     <td><h1>Total price: {{$totalprice}}€</h1></td>
     <td>
-    <!--
-    <form method="POST" action="{{url('/buycart')}}">
-          <input type="hidden" name="track_id" value="{{$track->id}}">
+    
+    <form method="POST" action="{{url('/order')}}">
+          <input type="hidden" name="tracks_id" value="{{implode("a",$lista)}}">
+          <input type="hidden" name="cart_id" value="{{implode("c",$lista2)}}">
           <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
           <input type="hidden" name="_token" value="{{ csrf_token() }}">
          <button type="submit" class="btn" style="background:#ff53a0; color:#fff;" >Buy</button>
          </form>
-    -->
+    
     </td>
   </tr>
 </table>

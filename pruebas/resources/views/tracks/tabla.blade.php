@@ -45,26 +45,50 @@
      @if (!Auth::guest())
      <td>
        <?php
+        $auth = false;
+          if(Auth::user()){
+            $carrito = DB::table('cart')
+                          ->where('track_id', $track->id)
+                          ->where('user_id', Auth::user()->id)
+                          ->count();
+            if($carrito != 1){
+              $mostrar=true;
+            }else{
+              $mostrar=false;
+            }
+            $auth=true;
+        }
 
-          $carrito = DB::table('cart')
+        if(Auth::user()){
+          $isInOrders = DB::table('orders')
                         ->where('track_id', $track->id)
                         ->where('user_id', Auth::user()->id)
                         ->count();
-          if($carrito != 1){
-            $mostrar=true;
+          if($isInOrders != 0){
+            $mostrarOrders=false;
           }else{
-            $mostrar=false;
+            $mostrarOrders=true;
           }
-
+      }
         ?>
-       <form method="POST" action="{{url('/cart')}}">
-          <input type="hidden" name="track_id" value="{{$track->id}}">
-          <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-          <input type="hidden" name="_token" value="{{ csrf_token() }}">
-         @if ($mostrar)<button type="submit" class="btn" style="background:#ff53a0; color:#fff;" >{{$track->price}}€</button>
-         @else <button type="submit" disabled class="btn" style="background:#ff53a0; color:#fff;" >You have the track on the cart</button>
-         @endif
-       </form>
+        @if($auth)
+            @if($mostrarOrders)
+                @if ($mostrar)
+                <form method="POST" action="{{url('/cart')}}">
+                  <input type="hidden" name="track_id" value="{{$track->id}}">
+                  <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                  <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <button type="submit" class="btn" style="background:#ff53a0; color:#fff;" >{{$track->price}}€</button>
+                </form>
+                @else 
+                <button disabled class="btn" style="background:#ff53a0; color:#fff;" >You have the track on the cart</button>
+                @endif
+           @else
+           <button disabled class="btn" style="background:#ff53a0; color:#fff;" >You already bought the track</button>
+           @endif    
+        @else
+           <a href="{{url('/login')}}" class="btn" style="background:#ff53a0; color:#fff;" >{{$track->price}}€</button>
+        @endif
     </td>
     @else
       <td>

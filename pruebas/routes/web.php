@@ -42,6 +42,9 @@ Route::get('/cart', 'CartController@showCart')->name('cart.tabla');
 Route::post('/cart', 'CartController@create');
 Route::post('/deleteCarTrack', 'CartController@deleteTrack');
 
+Route::post('/orders', 'OrdersController@create');
+Route::get('/orders', 'OrdersController@showOrders');
+
 Route::get('artist/{name}', 'ArtistController@show');
 
 Route::get('genres/{name}', 'TracksController@showByGenre');

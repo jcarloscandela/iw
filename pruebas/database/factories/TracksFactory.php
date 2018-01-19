@@ -12,6 +12,10 @@ $factory->define(App\Track::class, function (Faker $faker) {
     $genre = $genres[rand(0,$genreCount)];
     $artists = Artist::All();
     $artist = $artists[rand(0,99)];
+
+    $num = rand(1,12);
+    $url = "./mp3/track".$num.".mp3";
+    //"./mp3/juicy.mp3"
     return [
         'title' => $faker->text(10),
         'bpm' => rand(100, 150),
@@ -20,6 +24,7 @@ $factory->define(App\Track::class, function (Faker $faker) {
         'price' => (rand(100, 250)) / 100,
         'genre_id' => $genre->id,
         'release' => $faker->date,
+        'url' => $url,
         'artist_id' => $artist->id
     ];
 });

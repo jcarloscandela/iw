@@ -12,6 +12,17 @@
     var as = audiojs.createAll();
   });
 </script>
+
+<?php
+  $tracksCart =  DB::table('tracks')
+  ->join('cart', 'tracks.id', '=', 'cart.track_id')
+  ->where('user_id', Auth::user()->id)
+  ->get();
+  $lista = [];
+  $lista2 = [];
+  $totalprice = 0;
+  $emptyCart = false;
+   ?>
 <table class="table">
   <thead class="thead-dark">
     <tr>
@@ -26,18 +37,10 @@
     </tr>
   </thead>
   <tbody>
-  <?php
-  $tracksCart =  DB::table('tracks')
-  ->join('cart', 'tracks.id', '=', 'cart.track_id')
-  ->where('user_id', Auth::user()->id)
-  ->get();
-  $lista = [];
-  $lista2 = [];
-  $totalprice = 0;
-   ?>
+
   @foreach($tracksCart as $track)
   <tr>
-     <td>{{$track->title}} <audio src="./mp3/juicy.mp3" preload="none" ></audio></td>
+     <td>{{$track->title}}  <audio src="{{$track->url}}" preload="none" ></audio></td>
      <?php
         $artist = $artist = DB::table('artists')
                        ->where('id', $track->artist_id)
@@ -49,7 +52,7 @@
       
                        array_push($lista,$track->track_id);
                        array_push($lista2,$track->id);
-                      
+                       $emptyCart = true;
         
       ?>
      <td><a href="{{url('artist')}}/{{$aux}}">{{$artist->name}}</a> </td>
@@ -77,6 +80,7 @@
   @endforeach
   </tbody>
 </table>
+@if($emptyCart)
 <table>
   <tr>
     <td><h1>Total price: {{$totalprice}}€</h1></td>
@@ -93,6 +97,11 @@
     </td>
   </tr>
 </table>
-
+@else
+<table>
+  <tr>
+    <td><h1>Your cart is empty</h1></td>
+</table>
+@endif
 
 @stop

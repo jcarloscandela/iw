@@ -20,6 +20,7 @@ class CreateTracksTable extends Migration
             $table->string('key');
             $table->time('duration');
             $table->float('price');
+            $table->string('url');
             $table->integer('genre_id')->unsigned();
             $table->foreign('genre_id')->references('id')->on('genres')->onDelete('cascade')->onUpdate('cascade');
             $table->string('release');

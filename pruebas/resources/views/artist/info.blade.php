@@ -1,8 +1,14 @@
 @extends('layout')
 @section('cabecera')
 <h1 style="margin:2%">{{$artist->name}}</h1>
+<script src="./js/audio.min.js">
+audiojs.events.ready(function() {
+    var as = audiojs.createAll();
+  });
+</script>
 @endsection
 @section('contenido')
+
 <!-- <div class="">
   <div class="" style="padding-right:20%; padding-left:5%">
 
@@ -25,7 +31,7 @@
 <table class="table">
   <thead class="thead-dark">
     <tr>
-      <th scope="col">Title</th>
+      <th scope="col">Title <audio src="./mp3/juicy.mp3" preload="none" ></audio></th>
       <th scope="col">Genre</th>
       <th scope="col">BPM</th>
       <th scope="col">Key</th>
@@ -46,7 +52,6 @@
        <td>{{$track->key}}</td>
        <td>{{$track->duration}}</td>
        <td>{{$track->price}}</td>
-       <td>{{$track->title}} <audio src="./mp3/juicy.mp3" preload="none" ></audio></td>
     </tr>
     @endforeach
   </tbody>

@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('cabecera')
-<h1 style="margin:2%">Tracks in my cart</h1>
+<h1 style="margin:2%">My tracks</h1>
 <script src="./js/audio.min.js"></script>
 @endsection
 
@@ -36,7 +36,7 @@
    ?>
   @foreach($tracksCart as $track)
   <tr>
-     <td>{{$track->title}} <audio src="./mp3/juicy.mp3" preload="none" ></audio></td>
+     <td>{{$track->title}} <audio src="{{$track->url}}" preload="none" ></audio></td>
      <?php
         $artist = $artist = DB::table('artists')
                        ->where('id', $track->artist_id)
@@ -45,8 +45,6 @@
         $genre = $genre = DB::table('genres')
                        ->where('id', $track->genre_id)
                        ->get()->first();
-      
-            
                       
         
       ?>
@@ -55,11 +53,18 @@
         $genre = $genre = DB::table('genres')
                        ->where('id', $track->genre_id)
                        ->get()->first();
+        $songDownloadName = $artist->name;
+        $songDownloadName .= " - ";
+        $songDownloadName .= $track->title;
+        $songDownloadName .= ".mp3";
       ?>
      <td>{{$genre->name}}</td>
      <td>{{$track->bpm}}</td>
      <td>{{$track->key}}</td>
      <td>{{$track->duration}}</td>
+     <td>
+            <a href="{{$track->url}}" download="{{$songDownloadName}}"><span class="glyphicon glyphicon-download" aria-hidden="true"></span></a>
+     </td>
   </tr>
   @endforeach
   </tbody>

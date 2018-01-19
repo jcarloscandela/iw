@@ -22,8 +22,16 @@ main {
 </style>
 @endsection
 
-@section('contenido')
+@section('cabecera')
+<script src="./js/audio.min.js"></script>
+@endsection
 
+@section('contenido')
+<script>
+  audiojs.events.ready(function() {
+    var as = audiojs.createAll();
+  });
+</script>
 <div class="container fill">
   @if($artists->count()>0)
   <div class="">
@@ -59,7 +67,7 @@ main {
       <tbody>
       @foreach($tracks as $track)
       <tr>
-         <td>{{$track->title}} <audio src="./mp3/juicy.mp3" preload="none" ></audio></td>
+         <td>{{$track->title}} <audio src="{{$track->url}}" preload="none" ></audio></td>
          <?php
             $artist = $artist = DB::table('artists')
                            ->where('id', $track->artist_id)
@@ -76,8 +84,9 @@ main {
          <td>{{$track->duration}}</td>
 
          <td>
-           <?php
-
+         <?php
+          $auth = false;
+            if(Auth::user()){
               $carrito = DB::table('cart')
                             ->where('track_id', $track->id)
                             ->where('user_id', Auth::user()->id)
@@ -87,17 +96,40 @@ main {
               }else{
                 $mostrar=false;
               }
-
-            ?>
-           <form method="POST" action="{{url('/cart')}}">
-              <input type="hidden" name="track_id" value="{{$track->id}}">
-              <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-              <input type="hidden" name="_token" value="{{ csrf_token() }}">
-             @if ($mostrar)<button type="submit" class="btn" style="background:#ff53a0; color:#fff;" >{{$track->price}}€</button>
-             @else <button type="submit" disabled class="btn" style="background:#ff53a0; color:#fff;" >You have the track on the cart</button>
-             @endif
-           </form>
-        </td>
+              $auth=true;
+          }
+  
+          if(Auth::user()){
+            $isInOrders = DB::table('orders')
+                          ->where('track_id', $track->id)
+                          ->where('user_id', Auth::user()->id)
+                          ->count();
+            if($isInOrders != 0){
+              $mostrarOrders=false;
+            }else{
+              $mostrarOrders=true;
+            }
+        }
+          ?>
+          @if($auth)
+              @if($mostrarOrders)
+                  @if ($mostrar)
+                  <form method="POST" action="{{url('/cart')}}">
+                    <input type="hidden" name="track_id" value="{{$track->id}}">
+                    <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                  <button type="submit" class="btn" style="background:#ff53a0; color:#fff;" >{{$track->price}}€</button>
+                  </form>
+                  @else 
+                  <button disabled class="btn" style="background:#ff53a0; color:#fff;" >You have the track on the cart</button>
+                  @endif
+             @else
+             <button disabled class="btn" style="background:#94d504; color:#262626;" >You already bought the track</button>
+             @endif    
+          @else
+             <a href="{{url('/login')}}" class="btn" style="background:#ff53a0; color:#fff;" >{{$track->price}}€</button>
+          @endif
+      </td>
       </tr>
       @endforeach
       </tbody>

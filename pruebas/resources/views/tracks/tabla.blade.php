@@ -27,7 +27,7 @@
   <tbody>
   @foreach($tracks as $track)
   <tr>
-     <td>{{$track->title}} <audio src="./mp3/juicy.mp3" preload="none" ></audio></td>
+     <td>{{$track->title}} <audio src="{{$track->url}}" preload="none" ></audio></td>
      <?php
         $artist = $artist = DB::table('artists')
                        ->where('id', $track->artist_id)
@@ -84,7 +84,7 @@
                 <button disabled class="btn" style="background:#ff53a0; color:#fff;" >You have the track on the cart</button>
                 @endif
            @else
-           <button disabled class="btn" style="background:#ff53a0; color:#fff;" >You already bought the track</button>
+           <button disabled class="btn" style="background:#94d504; color:#262626;" >You already bought the track</button>
            @endif    
         @else
            <a href="{{url('/login')}}" class="btn" style="background:#ff53a0; color:#fff;" >{{$track->price}}€</button>

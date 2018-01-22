@@ -1,4 +1,27 @@
 @extends('layout')
+@section('js')
+function showArtist(str) {
+    if (str == "") {
+        document.getElementById("txtHint").innerHTML = "";
+        return;
+    } else {
+        if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("txtHint").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("GET","editartist?q="+str,true);
+        xmlhttp.send();
+    }
+}
+@endsection
 @section('css')
 <style media="screen">
 .fill {
@@ -77,29 +100,16 @@ table{
     </div>
     <div role="tabpanel" class="tab-pane" id="update">
       <div class="form-group container" style="margin-top:10px">
-        {!! Form::open(['style' => "padding:5%; width:50%", 'class' => "center-block fill", 'action' => "ArtistController@update",'files' => true]) !!}
           <div class="form-group">
             <label for="sel1">Select list:</label>
-            <select class="form-control" id="sel1" name="nameArtist" style="width:300px" onchange="">
+            <select class="form-control" id="nameArtist" name="nameArtist" style="width:300px" onchange="showArtist(this.value)">
+              <option selected="selected"></option>
              @foreach ($artists as $artist)
               <option>{{$artist->name}}</option>
              @endforeach
             </select>
+            <div id="txtHint"><b>Artist info will be displayed here...</b></div>
           </div>
-          <input type="hidden" name="_token" value="{{ csrf_token() }}">
-          <div class="form-group">
-            <label for="biography">Biography</label>
-            <textarea class="form-control" name="biography" id="biographyUpdate" rows="3"></textarea>
-          </div>
-          <div class="form-group">
-            <label for="picture">Picture</label>
-            <input type="file" name="picture" class="form-control-file" id="pictureUpdate">
-            <!-- <img src="" alt="Artist pic"> -->
-          </div>
-          <div class="form-group">
-            <button type="submit" class="btn btn-primary">Update</button>
-          </div>
-        </form>
       </div>
     </div>
     <div role="tabpanel" class="tab-pane" id="delete">

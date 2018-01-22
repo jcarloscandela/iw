@@ -80,14 +80,14 @@
                   <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <button type="submit" class="btn" style="background:#ff53a0; color:#fff;" >{{$track->price}}€</button>
                 </form>
-                @else 
+                @else
                 <button disabled class="btn" style="background:#ff53a0; color:#fff;" >You have the track on the cart</button>
                 @endif
            @else
            <button disabled class="btn" style="background:#94d504; color:#262626;" >You already bought the track</button>
-           @endif    
+           @endif
         @else
-           <a href="{{url('/login')}}" class="btn" style="background:#ff53a0; color:#fff;" >{{$track->price}}€</button>
+           <a href="login" class="btn" style="background:#ff53a0; color:#fff;" >{{$track->price}}€</button>
         @endif
     </td>
     @else

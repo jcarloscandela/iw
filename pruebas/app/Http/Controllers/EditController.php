@@ -21,6 +21,7 @@ class EditController extends Controller
     }
 
     public function genres(){
-      return view('edit.genres');
+      $genres = Genre::All();
+      return view('edit.genres', compact('genres'));
     }
 }

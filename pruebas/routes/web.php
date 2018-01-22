@@ -65,3 +65,12 @@ Route::any('TrackDeleted', 'TracksController@delete');
 Route::any('GenreCreated', 'GenresController@create');
 Route::any('GenreUpdated', 'GenresController@update');
 Route::any('GenreDeleted', 'GenresController@delete');
+
+
+
+Route::get('editartist', function(){
+  return view('edit.ArtistUpdate');
+});
+Route::get('edittrack', function(){
+  return view('edit.TrackUpdate');
+});

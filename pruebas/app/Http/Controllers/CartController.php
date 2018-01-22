@@ -22,6 +22,7 @@ class CartController extends Controller
     }
 
     public function addTrack($track_id, $user_id){
+      dd($user_id);
         return Cart::create([
             'track_id' => $track_id,
             'user_id' => $user_id,

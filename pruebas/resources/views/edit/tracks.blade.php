@@ -3,7 +3,52 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
 @endsection
 @section('css')
+<style media="screen">
+.fill {
+  min-height: 100%;
+  height: 100%;
+}
+#map {
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+}
+body {                /* body - or any parent wrapper */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 
+main {
+  flex: 1;
+}
+table{
+  margin-bottom: 30px;
+}
+</style>
+@endsection
+@section('js')
+function showTrack(str) {
+    if (str == "") {
+        document.getElementById("txtHint").innerHTML = "";
+        return;
+    } else {
+        if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("txtHint").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("GET","edittrack?q="+str,true);
+        xmlhttp.send();
+    }
+}
 @endsection
 
 @section('contenido')
@@ -95,7 +140,18 @@
       </form>
     </div>
     <div role="tabpanel" class="tab-pane" id="update">
-      ...
+      <div class="form-group container" style="margin-top:10px">
+          <div class="form-group">
+            <label for="sel1">Select list:</label>
+            <select class="form-control" id="titleTrack" name="titleTrack" style="width:300px" onchange="showTrack(this.value)">
+              <option selected="selected"></option>
+             @foreach ($tracks as $track)
+              <option>{{$track->title}}</option>
+             @endforeach
+            </select>
+            <div id="txtHint"><b>Track info will be displayed here...</b></div>
+          </div>
+      </div>
     </div>
     <div role="tabpanel" class="tab-pane" id="delete">
       <table class="table-condensed table-hover" style="width:50%">

@@ -71,18 +71,19 @@ class ArtistController extends Controller
 
     public function update(Request $request){
       $this->validate($request, [
+        'name' => 'required',
         'biography' => 'required',
-        'picture' => 'required|image|max:1024',
+        'picture' => 'image|max:1024',
       ]);
       $id_artist = DB::table('artists')
-                      ->where('name', '=', $request->input('nameArtist'))
+                      ->where('id', '=', $request->input('id'))
                       ->get()->first()->id;
       // dd($id_artist);
-      /*if($request->has('name')){
+      if($request->has('name')){
         DB::table('artists')
                   ->where('id', $id_artist)
                   ->update(['name' => $request->input('name')]);
-      }*/
+      }
       if($request->has('biography')){
         DB::table('artists')
                   ->where('id', $id_artist)

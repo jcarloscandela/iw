@@ -17,11 +17,11 @@
     {{HTML::script('js/jquery-3.2.1.js')}}
     {{HTML::script('js/bootstrap.min.js')}}
     {{HTML::script('js/audio.min.js')}}
-    
+
     @yield('head')
     <script type="text/javascript">
       @yield('js')
-    </script> 
+    </script>
     <script>
     audiojs.events.ready(function() {
         var as = audiojs.createAll();
@@ -65,7 +65,7 @@
                           </ul>
                         </li>
                     </ul>
-                    <form class="navbar-form navbar-left" action="search" method="POST" style="">
+                    <form class="navbar-form navbar-left" action="{{url('search')}}" method="POST" style="">
                       <input type="hidden" name="_token" value="{{ csrf_token() }}">
                       <div class="form-group">
                         <input type="text" class="form-control" name="search" placeholder="Search">

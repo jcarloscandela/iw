@@ -12,23 +12,26 @@
     var as = audiojs.createAll();
   });
 </script>
+
 <table class="table">
   <thead class="thead-dark">
     <tr>
-      <th scope="col" width="35%">Title</th>
+      <th scope="col" width="30%">Title</th>
       <th scope="col" width="15%">Artist</th>
-      <th scope="col" width="10%">Genre</th>
-      <th scope="col" width="10%">BPM</th>
-      <th scope="col" width="10%">Key</th>
-      <th scope="col" width="10%">Duration</th>
-      <th scope="col" width="10%">Price</th>
+      <th scope="col" width="8%">Genre</th>
+      <th scope="col" width="4%">BPM</th>
+      <th scope="col" width="2%">Key</th>
+      <th scope="col" width="7%">Duration</th>
+      <th scope="col" width="5%">Price</th>
+      <th scope="col" width="5%">Add to list</th>
     </tr>
   </thead>
   <tbody>
   @foreach($tracks as $track)
   <tr>
-     <td>{{$track->title}} <audio src="{{$track->url}}" preload="none" ></audio></td>
+     <td>{{$track->title}} <audio src="{{ asset($track->url)}}" preload="none" ></audio></td>
      <?php
+
         $artist = $artist = DB::table('artists')
                        ->where('id', $track->artist_id)
                        ->get()->first();
@@ -42,7 +45,7 @@
      <td>{{$track->bpm}}</td>
      <td>{{$track->key}}</td>
      <td>{{$track->duration}}</td>
-     @if (!Auth::guest())
+
      <td>
        <?php
         $auth = false;
@@ -58,7 +61,6 @@
             }
             $auth=true;
         }
-
         if(Auth::user()){
           $isInOrders = DB::table('orders')
                         ->where('track_id', $track->id)
@@ -81,26 +83,54 @@
                 <button type="submit" class="btn" style="background:#ff53a0; color:#fff;" >{{$track->price}}€</button>
                 </form>
                 @else
-                <button disabled class="btn" style="background:#ff53a0; color:#fff;" >You have the track on the cart</button>
+                <button disabled class="btn" style="background:#ff53a0; color:#fff;" ><p> You have the track </p><p>on the cart</p> </button>
                 @endif
            @else
-           <button disabled class="btn" style="background:#94d504; color:#262626;" >You already bought the track</button>
+           <button disabled class="btn" style="background:#94d504; color:#262626;" ><p>You already </p><p>bought the track</p></button>
            @endif
         @else
-           <a href="login" class="btn" style="background:#ff53a0; color:#fff;" >{{$track->price}}€</button>
+           <a href="{{url('/login')}}" class="btn" style="background:#ff53a0; color:#fff;" >{{$track->price}}€</button>
+        @endif
+        </td>
+        <td>
+        @if($auth)
+
+                  <?php
+                        if(Auth::user()){
+                          $lists = DB::table('lists')
+                                        ->where('user_id', Auth::user()->id)->get();
+                          }
+                          $listsContainTrack = DB::table('tracktolists')->select('list_id')->where('track_id', $track->id)->get();
+                      ?>
+                    <form method="POST" action="{{url('/tracksList')}}">
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <input type="hidden" name="track_id_list" value="{{$track->id}}">
+                    <div class="form-group">
+                      <select class="form-control" id="list_id" name="list_id" style="width:300px" onchange="this.form.submit()">
+                        <option disabled selected value> Select a List </option>
+                      @foreach ($lists as $list)
+                      <?php
+                       $encontrado = false;
+                       foreach( $listsContainTrack as $pruebalist){
+                         if($pruebalist->list_id == $list->id){
+                           $encontrado = true;
+                          }
+                      }
+                      ?>
+                        @if(!$encontrado)
+                          <option value="{{$list->id}}">{{$list->title}}</option>
+                        @endif
+                      @endforeach
+                      </select>
+                  </div>
+                  </form>
+        @else
+           <a href="{{url('/login')}}" class="btn" style="background:#ff53a0; color:#fff;" >Add to list</button>
         @endif
     </td>
-    @else
-      <td>
-        <form method="GET" action="login">
-          <button type="submit" class="btn" style="background:#ff53a0; color:#fff;" >{{$track->price}}€</button>
-        </form>
-      </td>
-    @endif
   </tr>
   @endforeach
   </tbody>
 </table>
-
 
 @stop

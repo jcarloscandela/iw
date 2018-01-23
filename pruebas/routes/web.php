@@ -66,7 +66,11 @@ Route::any('GenreCreated', 'GenresController@create');
 Route::any('GenreUpdated', 'GenresController@update');
 Route::any('GenreDeleted', 'GenresController@delete');
 
+Route::get('lists', 'ListsController@myLists')->middleware('auth');
+Route::post('lists', 'ListsController@createList')->middleware('auth');
 
+
+Route::post('/tracksList', 'TracksListController@create')->middleware('auth');
 
 Route::get('editartist', function(){
   return view('edit.ArtistUpdate');

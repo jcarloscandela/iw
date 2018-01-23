@@ -16,10 +16,16 @@
 
     {{HTML::script('js/jquery-3.2.1.js')}}
     {{HTML::script('js/bootstrap.min.js')}}
-
+    {{HTML::script('js/audio.min.js')}}
+    
     @yield('head')
     <script type="text/javascript">
       @yield('js')
+    </script> 
+    <script>
+    audiojs.events.ready(function() {
+        var as = audiojs.createAll();
+    });
     </script>
 </head>
 <body class="modal-content">
@@ -91,7 +97,7 @@
                                         </form>
                                     </li>
                                     <li><a href="{{url('orders')}}">My orders</a> </li>
-                                    <li><a href="{{url('listas')}}">Mis lists</a> </li>
+                                    <li><a href="{{url('lists')}}">My lists</a> </li>
                                     <li><a href="{{url('cart')}}">My cart</a> </li>
                                     <?php if (Auth::user()->name == 'admin'): ?>
                                       <li><a href="{{url('edit_artists')}}">Gestionar artistas</a> </li>

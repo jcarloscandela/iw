@@ -1,28 +1,71 @@
 @extends('layout')
-@section('cabecera')
-<h1 style="margin:2%">{{$artist->name}}</h1>
-<script ></script>
+@section('css')
+<style media="screen">
+.fill {
+  min-height: 100%;
+  height: 100%;
+}
+#map {
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+}
+body {                /* body - or any parent wrapper */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}
+table{
+  margin-bottom: 30px;
+}
+</style>
 @endsection
+
+@section('cabecera')
+<script src="./js/audio.min.js"></script>
+@endsection
+
+
+
+
 @section('contenido')
+<script>
+  audiojs.events.ready(function() {
+    var as = audiojs.createAll();
+  });
+</script>
+<div class="container fill" height="100%">
 
-<!-- <div class="">
-  <div class="" style="padding-right:20%; padding-left:5%">
-  </div>
-</div> -->
-<div class="media" style="padding-right:20%; padding-left:2%">
-    <div class="media-left">
-      <img src="{{ asset($artist->picture) }}" alt="profile pic" class="media-object " style="margin-right:5%">
-      <!--  -->
-    </div>
-    <div class="media-body">
-      <p>{{$artist->biography}}</p>
-    </div>
-  </div>
-  <hr>
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#mylists" aria-controls="home" role="tab" data-toggle="tab">My lists</a></li>
+    <li role="presentation"><a href="#create" aria-controls="profile" role="tab" data-toggle="tab">Create</a></li>
+  </ul>
 
+  <!-- Tab panes -->
+  <div class="tab-content fill">
+    <div role="tabpanel" class="tab-pane active" id="mylists" style="height:100%; min-height:100%;">
+    <?php 
+    $lists = DB::table('lists')
+    ->where('user_id', Auth::user()->id)
+    ->get();
+    ?>
 
-
-  <table class="table">
+    
+    @foreach($lists as $list)
+    <?php 
+    $tracks = DB::table('tracks')
+    ->join('tracktolists', 'tracks.id', '=', 'tracktolists.track_id')
+    ->where('list_id', $list->id)
+    ->get();
+    ?>
+    <h1>{{$list->title}}</h1>
+     <h4>Info: {{$list->info}}</h4>
+     <table class="table">
   <thead class="thead-dark">
     <tr>
       <th scope="col" width="30%">Title</th>
@@ -32,15 +75,11 @@
       <th scope="col" width="2%">Key</th>
       <th scope="col" width="7%">Duration</th>
       <th scope="col" width="5%">Price</th>
-      <th scope="col" width="5%">Add to list</th>
     </tr>
   </thead>
   <tbody>
   @foreach($tracks as $track)
   <tr>
-  <?php
-     $path = public_path();
-     ?>
      <td>{{$track->title}} <audio src="{{ asset($track->url)}}" preload="none" ></audio></td>
      <?php
         $artist = $artist = DB::table('artists')
@@ -72,6 +111,7 @@
             }
             $auth=true;
         }
+
         if(Auth::user()){
           $isInOrders = DB::table('orders')
                         ->where('track_id', $track->id)
@@ -93,56 +133,49 @@
                   <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <button type="submit" class="btn" style="background:#ff53a0; color:#fff;" >{{$track->price}}€</button>
                 </form>
-                @else
+                @else 
                 <button disabled class="btn" style="background:#ff53a0; color:#fff;" ><p> You have the track </p><p>on the cart</p> </button>
                 @endif
            @else
            <button disabled class="btn" style="background:#94d504; color:#262626;" ><p>You already </p><p>bought the track</p></button>
-           @endif
+           @endif    
         @else
            <a href="{{url('/login')}}" class="btn" style="background:#ff53a0; color:#fff;" >{{$track->price}}€</button>
         @endif
         </td>
-        <td>
-        @if($auth)
-
-                  <?php
-                        if(Auth::user()){
-                          $lists = DB::table('lists')
-                                        ->where('user_id', Auth::user()->id)->get();
-                          }
-                          $listsContainTrack = DB::table('tracktolists')->select('list_id')->where('track_id', $track->id)->get();
-                      ?>
-                    <form method="POST" action="{{url('/tracksList')}}">
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                    <input type="hidden" name="track_id_list" value="{{$track->id}}">
-                    <div class="form-group">
-                      <select class="form-control" id="list_id" name="list_id" style="width:300px" onchange="this.form.submit()">
-                        <option disabled selected value> Select a List </option>
-                      @foreach ($lists as $list)
-                      <?php
-                       $encontrado = false;
-                       foreach( $listsContainTrack as $pruebalist){
-                         if($pruebalist->list_id == $list->id){
-                           $encontrado = true;
-                          }
-                      }
-                      ?>
-                        @if(!$encontrado)
-                          <option value="{{$list->id}}">{{$list->title}}</option>
-                        @endif
-                      @endforeach
-                      </select>
-                  </div>
-                  </form>
-        @else
-           <a href="{{url('/login')}}" class="btn" style="background:#ff53a0; color:#fff;" >Add to list</button>
-        @endif
-    </td>
   </tr>
   @endforeach
   </tbody>
 </table>
 
+   
+     <hr>
+    @endforeach
+    
+  </div>
 
-@stop
+    <div role="tabpanel" class="tab-pane" id="create">
+      <div class="form-group container" style="margin-top:10px">
+        {!! Form::open(['style' => "padding:5%; width:50%", 'class' => "center-block fill", 'action' => "ListsController@createList"]) !!}
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        <div class="form-group" >
+          <label for="name">Title</label>
+          <input type="text" name="title" class="form-control " id="title" aria-describedby="titleHelp" placeholder="Enter list name">
+        </div>
+        <div class="form-group">
+            <label for="sel1">Info</label>
+            <input type="text" name="info" class="form-control " id="info" aria-describedby="titleHelp" placeholder="Enter some info of the list here">
+          </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+        <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+        
+      </form>
+      </div>
+    </div>
+
+  
+</div>
+
+@endsection

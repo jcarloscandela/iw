@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class List extends Model
+class TrackList extends Model
 {
   protected $fillable = [
       'name', 'creation_date'
@@ -12,8 +12,5 @@ class List extends Model
 
   public function tracks() {
     return $this->belongsToMany('Track');
-  }
-  public funtion user() {
-    return $this->belongsTo('User');
   }
 }

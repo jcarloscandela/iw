@@ -91,7 +91,7 @@
                                         </form>
                                     </li>
                                     <li><a href="{{url('orders')}}">My orders</a> </li>
-                                    <li><a href="{{url('listas')}}">Mis lists</a> </li>
+                                    <li><a href="{{url('lists')}}">My lists</a> </li>
                                     <li><a href="{{url('cart')}}">My cart</a> </li>
                                     <?php if (Auth::user()->name == 'admin'): ?>
                                       <li><a href="{{url('edit_artists')}}">Gestionar artistas</a> </li>

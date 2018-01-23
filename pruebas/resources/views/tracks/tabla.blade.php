@@ -12,6 +12,7 @@
     var as = audiojs.createAll();
   });
 </script>
+
 <table class="table">
   <thead class="thead-dark">
     <tr>
@@ -89,6 +90,41 @@
         @else
            <a href="{{url('/login')}}" class="btn" style="background:#ff53a0; color:#fff;" >{{$track->price}}€</button>
         @endif
+        </td>
+        <td>
+        @if($auth)
+                <form method="POST" action="{{url('/tracksList')}}">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">  
+                <input type="hidden" name="track_id_list" value="{{$track->id}}">
+                  <?php
+                        if(Auth::user()){
+                          $lists = DB::table('lists')
+                                        ->where('user_id', Auth::user()->id)->get();
+                          }
+                          $listsContainTrack = DB::table('tracktolists')->select('list_id')->where('track_id', $track->id)->get();                                                          
+                      ?>
+                  <div class="form-group">
+                      <label for="sel1">Add to list:</label>
+                      <select class="form-control" id="sel1" name="list_id" style="width:300px" onchange="this.form.submit()">
+                        <option disabled selected value> Select a List </option>   
+                      @foreach ($lists as $list)
+                      <?php
+                       $encontrado = false;
+                       foreach( $listsContainTrack as $pruebalist){
+                         if($pruebalist->list_id == $list->id){
+                           $encontrado = true;
+                          }
+                      }
+                      ?>
+                        @if(!$encontrado)
+                          <option value="{{$list->id}}">{{$list->title}}</option>  
+                        @endif       
+                      @endforeach
+                      </select>
+                  </div>
+        @else
+           <a href="{{url('/login')}}" class="btn" style="background:#ff53a0; color:#fff;" >Add to list</button>
+        @endif     
     </td>
   </tr>
   @endforeach

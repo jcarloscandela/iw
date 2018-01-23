@@ -13,4 +13,7 @@ class Lists extends Model
   public function tracks() {
     return $this->belongsToMany('Track');
   }
+  public funtion user() {
+    return $this->belongsTo('User');
+  }
 }

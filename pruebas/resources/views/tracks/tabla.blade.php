@@ -23,14 +23,15 @@
       <th scope="col" width="2%">Key</th>
       <th scope="col" width="7%">Duration</th>
       <th scope="col" width="5%">Price</th>
-      <th scope="col" width="10%">Add to list</th>
+      <th scope="col" width="5%">Add to list</th>
     </tr>
   </thead>
   <tbody>
   @foreach($tracks as $track)
   <tr>
-     <td>{{$track->title}} <audio src="{{$track->url}}" preload="none" ></audio></td>
+     <td>{{$track->title}} <audio src="{{ asset($track->url)}}" preload="none" ></audio></td>
      <?php
+    
         $artist = $artist = DB::table('artists')
                        ->where('id', $track->artist_id)
                        ->get()->first();
@@ -83,10 +84,10 @@
                 <button type="submit" class="btn" style="background:#ff53a0; color:#fff;" >{{$track->price}}€</button>
                 </form>
                 @else 
-                <button disabled class="btn" style="background:#ff53a0; color:#fff;" >You have the track on the cart</button>
+                <button disabled class="btn" style="background:#ff53a0; color:#fff;" ><p> You have the track </p><p>on the cart</p> </button>
                 @endif
            @else
-           <button disabled class="btn" style="background:#94d504; color:#262626;" >You already bought the track</button>
+           <button disabled class="btn" style="background:#94d504; color:#262626;" ><p>You already </p><p>bought the track</p></button>
            @endif    
         @else
            <a href="{{url('/login')}}" class="btn" style="background:#ff53a0; color:#fff;" >{{$track->price}}€</button>
@@ -94,9 +95,7 @@
         </td>
         <td>
         @if($auth)
-                <form method="POST" action="{{url('/tracksList')}}">
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">  
-                <input type="hidden" name="track_id_list" value="{{$track->id}}">
+             
                   <?php
                         if(Auth::user()){
                           $lists = DB::table('lists')
@@ -104,9 +103,11 @@
                           }
                           $listsContainTrack = DB::table('tracktolists')->select('list_id')->where('track_id', $track->id)->get();                                                          
                       ?>
-                  <div class="form-group">
-                    
-                      <select class="form-control" id="sel1" name="list_id" style="width:300px" onchange="this.form.submit()">
+                    <form method="POST" action="{{url('/tracksList')}}">
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">  
+                    <input type="hidden" name="track_id_list" value="{{$track->id}}">
+                    <div class="form-group">
+                      <select class="form-control" id="list_id" name="list_id" style="width:300px" onchange="this.form.submit()">
                         <option disabled selected value> Select a List </option>   
                       @foreach ($lists as $list)
                       <?php
@@ -123,6 +124,7 @@
                       @endforeach
                       </select>
                   </div>
+                  </form>
         @else
            <a href="{{url('/login')}}" class="btn" style="background:#ff53a0; color:#fff;" >Add to list</button>
         @endif     

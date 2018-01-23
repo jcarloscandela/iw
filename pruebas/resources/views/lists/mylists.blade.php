@@ -26,7 +26,6 @@ table{
 @endsection
 
 @section('cabecera')
-<h1 style="margin:2%">Tracks</h1>
 <script src="./js/audio.min.js"></script>
 @endsection
 
@@ -65,7 +64,7 @@ table{
     ->get();
     ?>
     <h1>{{$list->title}}</h1>
-     <h4>{{$list->info}}</h4>
+     <h4>Info: {{$list->info}}</h4>
      <table class="table">
   <thead class="thead-dark">
     <tr>
@@ -81,7 +80,7 @@ table{
   <tbody>
   @foreach($tracks as $track)
   <tr>
-     <td>{{$track->title}} <audio src="{{$track->url}}" preload="none" ></audio></td>
+     <td>{{$track->title}} <audio src="{{ asset($track->url)}}" preload="none" ></audio></td>
      <?php
         $artist = $artist = DB::table('artists')
                        ->where('id', $track->artist_id)
@@ -135,10 +134,10 @@ table{
                 <button type="submit" class="btn" style="background:#ff53a0; color:#fff;" >{{$track->price}}€</button>
                 </form>
                 @else 
-                <button disabled class="btn" style="background:#ff53a0; color:#fff;" >You have the track on the cart</button>
+                <button disabled class="btn" style="background:#ff53a0; color:#fff;" ><p> You have the track </p><p>on the cart</p> </button>
                 @endif
            @else
-           <button disabled class="btn" style="background:#94d504; color:#262626;" >You already bought the track</button>
+           <button disabled class="btn" style="background:#94d504; color:#262626;" ><p>You already </p><p>bought the track</p></button>
            @endif    
         @else
            <a href="{{url('/login')}}" class="btn" style="background:#ff53a0; color:#fff;" >{{$track->price}}€</button>

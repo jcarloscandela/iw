@@ -40,7 +40,7 @@
 
   @foreach($tracksCart as $track)
   <tr>
-     <td>{{$track->title}}  <audio src="{{$track->url}}" preload="none" ></audio></td>
+     <td>{{$track->title}}  <audio src="{{ asset($track->url)}}" preload="none" ></audio></td>
      <?php
         $artist = $artist = DB::table('artists')
                        ->where('id', $track->artist_id)

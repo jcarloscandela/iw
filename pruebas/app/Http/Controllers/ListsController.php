@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Track;
+use App\Lists;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 

@@ -16,13 +16,14 @@
 <table class="table">
   <thead class="thead-dark">
     <tr>
-      <th scope="col" width="35%">Title</th>
+      <th scope="col" width="30%">Title</th>
       <th scope="col" width="15%">Artist</th>
-      <th scope="col" width="10%">Genre</th>
-      <th scope="col" width="10%">BPM</th>
-      <th scope="col" width="10%">Key</th>
-      <th scope="col" width="10%">Duration</th>
-      <th scope="col" width="10%">Price</th>
+      <th scope="col" width="8%">Genre</th>
+      <th scope="col" width="4%">BPM</th>
+      <th scope="col" width="2%">Key</th>
+      <th scope="col" width="7%">Duration</th>
+      <th scope="col" width="5%">Price</th>
+      <th scope="col" width="10%">Add to list</th>
     </tr>
   </thead>
   <tbody>
@@ -104,7 +105,7 @@
                           $listsContainTrack = DB::table('tracktolists')->select('list_id')->where('track_id', $track->id)->get();                                                          
                       ?>
                   <div class="form-group">
-                      <label for="sel1">Add to list:</label>
+                    
                       <select class="form-control" id="sel1" name="list_id" style="width:300px" onchange="this.form.submit()">
                         <option disabled selected value> Select a List </option>   
                       @foreach ($lists as $list)

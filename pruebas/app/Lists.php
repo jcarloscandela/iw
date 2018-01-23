@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TrackList extends Model
+class Lists extends Model
 {
   protected $fillable = [
       'name', 'creation_date'

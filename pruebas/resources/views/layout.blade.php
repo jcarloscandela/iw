@@ -28,7 +28,7 @@
     });
     </script>
 </head>
-<body class="modal-content">
+<body>
     <div id="app" style="">
         <nav class="navbar-inverse navbar-default navbar-static-top">
             <div class="container">

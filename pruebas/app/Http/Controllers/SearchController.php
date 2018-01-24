@@ -16,6 +16,6 @@ class SearchController extends Controller
     $tracks = DB::table('tracks')->where('title', 'like', '%'.$searchValue."%")->get();
 
     //dd($artists, $tracks);
-    return view('search.search', compact('artists', 'tracks'));
+    return view('search.search', compact('artists', 'tracks', 'searchValue'));
   }
 }

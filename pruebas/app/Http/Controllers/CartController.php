@@ -18,6 +18,12 @@ class CartController extends Controller
 
     public function create(Request $request){
         DB::table('cart')->insert(['track_id' => $request->input('track_id'),'user_id' => $request->input('user_id')]);
+        if(!empty($request->input('search'))){
+          $searchValue = $request->input('search');
+          $artists = DB::table('artists')->where('name', 'like', '%'.$searchValue."%")->get();
+          $tracks = DB::table('tracks')->where('title', 'like', '%'.$searchValue."%")->get();
+          return view('search.search', compact('artists', 'tracks', 'searchValue'));
+        }
         return back()->with('success','Track added successfully to user cart');
     }
 
@@ -29,6 +35,9 @@ class CartController extends Controller
     }
 
     public function deleteTrack(Request $request){
+      // if(Auth::guest()){
+      //   abort(404, 'Not what are you looking for');
+      // }
       $track = $request->input('id');
       DB::table('cart')->where('track_id', $track)
                        ->where('user_id', Auth::user()->id)->delete();

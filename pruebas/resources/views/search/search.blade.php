@@ -1,23 +1,9 @@
 @extends('layout')
 @section('css')
 <style media="screen">
-.fill {
-  min-height: 100%;
-  height: 100%;
-}
-#map {
-    width: 100%;
-    height: 100%;
-    min-height: 100%;
-}
-body {                /* body - or any parent wrapper */
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-main {
-  flex: 1;
+h1 {
+  clear: both;
+  margin-left: 30px;
 }
 </style>
 @endsection
@@ -32,7 +18,6 @@ main {
     var as = audiojs.createAll();
   });
 </script>
-<div class="container fill">
   @if($artists->count()>0)
   <div class="">
     <h1>Artists</h1>
@@ -98,7 +83,7 @@ main {
               }
               $auth=true;
           }
-  
+
           if(Auth::user()){
             $isInOrders = DB::table('orders')
                           ->where('track_id', $track->id)
@@ -115,27 +100,64 @@ main {
               @if($mostrarOrders)
                   @if ($mostrar)
                   <form method="POST" action="{{url('/cart')}}">
+                    <input type="hidden" name="search" value="{{$searchValue}}">
                     <input type="hidden" name="track_id" value="{{$track->id}}">
                     <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                   <button type="submit" class="btn" style="background:#ff53a0; color:#fff;" >{{$track->price}}€</button>
                   </form>
-                  @else 
+                  @else
                   <button disabled class="btn" style="background:#ff53a0; color:#fff;" >You have the track on the cart</button>
                   @endif
              @else
              <button disabled class="btn" style="background:#94d504; color:#262626;" >You already bought the track</button>
-             @endif    
+             @endif
           @else
              <a href="{{url('/login')}}" class="btn" style="background:#ff53a0; color:#fff;" >{{$track->price}}€</button>
           @endif
-      </td>
+        </td>
+        <td>
+            @if($auth)
+
+                      <?php
+                            if(Auth::user()){
+                              $lists = DB::table('lists')
+                                            ->where('user_id', Auth::user()->id)->get();
+                              }
+                              $listsContainTrack = DB::table('tracktolists')->select('list_id')->where('track_id', $track->id)->get();
+                          ?>
+                        <form method="POST" action="{{url('/tracksList')}}">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="track_id_list" value="{{$track->id}}">
+                        <input type="hidden" name="search" value="{{$searchValue}}">
+                        <div class="form-group">
+                          <select class="form-control" id="list_id" name="list_id" style="width:300px" onchange="this.form.submit()">
+                            <option disabled selected value> Select a List </option>
+                          @foreach ($lists as $list)
+                          <?php
+                           $encontrado = false;
+                           foreach( $listsContainTrack as $pruebalist){
+                             if($pruebalist->list_id == $list->id){
+                               $encontrado = true;
+                              }
+                          }
+                          ?>
+                            @if(!$encontrado)
+                              <option value="{{$list->id}}">{{$list->title}}</option>
+                            @endif
+                          @endforeach
+                          </select>
+                      </div>
+                      </form>
+            @else
+               <a href="{{url('/login')}}" class="btn" style="background:#ff53a0; color:#fff;" >Add to list</button>
+            @endif
+        </td>
       </tr>
       @endforeach
       </tbody>
     </table>
   </div>
   @endif
-</div>
 
 @stop

@@ -38,21 +38,21 @@ Route::get('/tracks', 'TracksController@index')->name('tracks.tabla');
 
 Route::get('/artists', 'ArtistController@index')->name('artist.tabla');
 
-Route::get('/cart', 'CartController@showCart')->name('cart.tabla');
-Route::post('/cart', 'CartController@create');
-Route::post('/deleteCarTrack', 'CartController@deleteTrack');
+Route::get('/cart', 'CartController@showCart')->name('cart.tabla')->middleware('auth');
+Route::post('/cart', 'CartController@create')->middleware('auth');
+Route::any('/deleteCarTrack', 'CartController@deleteTrack');
 
-Route::post('/orders', 'OrdersController@create');
-Route::get('/orders', 'OrdersController@showOrders');
+Route::post('/orders', 'OrdersController@create')->middleware('auth');;
+Route::get('/orders', 'OrdersController@showOrders')->middleware('auth');;
 
 Route::get('artist/{name}', 'ArtistController@show');
 
 Route::get('genres/{name}', 'TracksController@showByGenre');
 
-Route::any('edit_tracks', 'EditController@tracks')->middleware('auth');
-Route::any('edit_artists', 'EditController@artists')->middleware('auth');
+Route::any('edit_tracks', 'EditController@tracks')->middleware('admin');
+Route::any('edit_artists', 'EditController@artists')->middleware('admin');
 Route::any('edit_artists/delete', 'ArtistController@delete');
-Route::get('edit_genres', 'EditController@genres')->middleware('auth');
+Route::get('edit_genres', 'EditController@genres')->middleware('admin');
 
 Route::post('/search','SearchController@search');
 

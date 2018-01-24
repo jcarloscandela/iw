@@ -49,15 +49,15 @@ table{
   <!-- Tab panes -->
   <div class="tab-content fill">
     <div role="tabpanel" class="tab-pane active" id="mylists" style="height:100%; min-height:100%;">
-    <?php 
+    <?php
     $lists = DB::table('lists')
     ->where('user_id', Auth::user()->id)
     ->get();
     ?>
 
-    
+
     @foreach($lists as $list)
-    <?php 
+    <?php
     $tracks = DB::table('tracks')
     ->join('tracktolists', 'tracks.id', '=', 'tracktolists.track_id')
     ->where('list_id', $list->id)
@@ -101,7 +101,7 @@ table{
         $auth = false;
           if(Auth::user()){
             $carrito = DB::table('cart')
-                          ->where('track_id', $track->id)
+                          ->where('track_id', $track->track_id)
                           ->where('user_id', Auth::user()->id)
                           ->count();
             if($carrito != 1){
@@ -114,7 +114,7 @@ table{
 
         if(Auth::user()){
           $isInOrders = DB::table('orders')
-                        ->where('track_id', $track->id)
+                        ->where('track_id', $track->track_id)
                         ->where('user_id', Auth::user()->id)
                         ->count();
           if($isInOrders != 0){
@@ -128,17 +128,17 @@ table{
             @if($mostrarOrders)
                 @if ($mostrar)
                 <form method="POST" action="{{url('/cart')}}">
-                  <input type="hidden" name="track_id" value="{{$track->id}}">
+                  <input type="hidden" name="track_id" value="{{$track->track_id}}">
                   <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                   <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <button type="submit" class="btn" style="background:#ff53a0; color:#fff;" >{{$track->price}}€</button>
                 </form>
-                @else 
+                @else
                 <button disabled class="btn" style="background:#ff53a0; color:#fff;" ><p> You have the track </p><p>on the cart</p> </button>
                 @endif
            @else
            <button disabled class="btn" style="background:#94d504; color:#262626;" ><p>You already </p><p>bought the track</p></button>
-           @endif    
+           @endif
         @else
            <a href="{{url('/login')}}" class="btn" style="background:#ff53a0; color:#fff;" >{{$track->price}}€</button>
         @endif
@@ -148,10 +148,10 @@ table{
   </tbody>
 </table>
 
-   
+
      <hr>
     @endforeach
-    
+
   </div>
 
     <div role="tabpanel" class="tab-pane" id="create">
@@ -170,12 +170,12 @@ table{
           <button type="submit" class="btn btn-primary">Create</button>
         </div>
         <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-        
+
       </form>
       </div>
     </div>
 
-  
+
 </div>
 
 @endsection

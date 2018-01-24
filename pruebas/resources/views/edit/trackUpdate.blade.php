@@ -9,7 +9,7 @@
         $track = DB::table('tracks')->where('title', $_GET['q'])->get()->first();
         $artists = DB::table('artists')->get();
         $genres = DB::table('genres')->get();     ?>
-      {!! Form::open(['style' => "padding:5%; width:50%", 'class' => "center-block fill", 'action' => "TracksController@update"]) !!}
+      {!! Form::open(['style' => "padding:5%; width:50%", 'class' => "center-block fill", 'action' => "TracksController@update",'files' => true]) !!}
           <input type="hidden" name="_token" value="{{ csrf_token() }}">
           <input type="hidden" name="idTrack" value="{{$track->id}}">
           <div class="form-group" >
@@ -73,6 +73,11 @@
                 @endif
               @endforeach
             </select>
+          </div>
+          <div class="form-group">
+            <label for="url">Track</label>
+            <input type="file" name="url" class="form-control-file" id="url">
+          </div>
           </div>
           <div class="form-group">
             <button type="submit" class="btn btn-primary">Update</button>

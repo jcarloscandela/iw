@@ -15,6 +15,10 @@ class ListsController extends Controller
       }
     
       public function createList(Request $request){
+        $this->validate($request, [
+          'title' => 'required|max:40',
+          'info' => 'required|max:255',
+        ]);
 
         DB::table('lists')->
         insert(['title' => $request->input('title'),

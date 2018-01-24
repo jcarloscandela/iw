@@ -49,6 +49,16 @@ class TracksController extends Controller
      $artist = DB::table('artists')
                   ->where('name',$request->input('selArtist'))
                   ->get()->first();
+                  
+     if($request->hasFile('url')){
+        $file = $request->file('url');
+        $file->move('mp3', $file->getClientOriginalName());
+                    // echo '<img src="imgs/'.$file->getClientOriginalName().'" />';
+        $filename = $file->getClientOriginalName();
+        }else{
+          $filename = "track1.mp3";
+        }
+     
      //echo($title.'<br>'.$bpm.'<br>'.$key.'<br>'.$duration.'<br>'.$price.'<br>'.$genre->id.'<br>'.$release.'<br>'.$artist->id);
      DB::table('tracks')->insert(
          ['title' => $title,
@@ -58,7 +68,9 @@ class TracksController extends Controller
           'price' => $price,
           'genre_id' => $genre->id,
           'release' => $release,
-          'artist_id' => $artist->id]
+          'artist_id' => $artist->id,
+          'url' => "./mp3/".$filename
+          ]
      );
      return back()->with('success','Track added successfully');
    }
@@ -84,18 +96,38 @@ class TracksController extends Controller
      $artist = DB::table('artists')
                   ->where('name',$request->input('selArtist'))
                   ->get()->first();
-     //echo($title.'<br>'.$bpm.'<br>'.$key.'<br>'.$duration.'<br>'.$price.'<br>'.$genre->id.'<br>'.$release.'<br>'.$artist->id);
-     DB::table('tracks')->where('id', $id)
-         ->update(
-         ['title' => $title,
-          'bpm' => $bpm,
-          'key' => $key,
-          'duration' => $duration,
-          'price' => $price,
-          'genre_id' => $genre->id,
-          'release' => $release,
-          'artist_id' => $artist->id]
-     );
+      if($request->hasFile('url')){
+        $file = $request->file('url');
+        $file->move('mp3', $file->getClientOriginalName());
+                        // echo '<img src="imgs/'.$file->getClientOriginalName().'" />';
+        $filename = $file->getClientOriginalName();
+        DB::table('tracks')->where('id', $id)
+        ->update(
+        ['title' => $title,
+         'bpm' => $bpm,
+         'key' => $key,
+         'duration' => $duration,
+         'price' => $price,
+         'genre_id' => $genre->id,
+         'release' => $release,
+         'artist_id' => $artist->id,
+         'url' => "./mp3/".$filename
+         ]
+    );
+      }else{
+        DB::table('tracks')->where('id', $id)
+        ->update(
+        ['title' => $title,
+         'bpm' => $bpm,
+         'key' => $key,
+         'duration' => $duration,
+         'price' => $price,
+         'genre_id' => $genre->id,
+         'release' => $release,
+         'artist_id' => $artist->id
+         ]
+    );                 
+      } 
      return back()->with('success','Track updated successfully');
    }
 

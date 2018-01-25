@@ -13,7 +13,7 @@ class ListsController extends Controller
     public function myLists(){
         return view('lists.mylists');
       }
-    
+
       public function createList(Request $request){
         $this->validate($request, [
           'title' => 'required|max:40',
@@ -26,6 +26,6 @@ class ListsController extends Controller
         'user_id' => $request->input('user_id')]);
         return back()->with('success','List added successfully');
 
-      
+
       }
 }

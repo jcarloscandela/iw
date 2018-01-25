@@ -143,6 +143,14 @@ table{
            <a href="{{url('/login')}}" class="btn" style="background:#ff53a0; color:#fff;" >{{$track->price}}€</button>
         @endif
         </td>
+        <td>
+          <form action="delTrackList" method="post">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="list_id" value="{{$list->id}}">
+            <input type="hidden" name="track_id" value="{{$track->track_id}}">
+            <button type="submit" class="btn btn-primary" name="button"> x </button>
+          </form>
+        </td>
   </tr>
   @endforeach
   </tbody>
@@ -198,15 +206,8 @@ table{
         @endforeach
       </ul>
     </div>
-<<<<<<< HEAD
-
-
-=======
   @endif
     </div>
-  
-  
->>>>>>> refs/remotes/origin/jcarlos
 </div>
 
 @endsection

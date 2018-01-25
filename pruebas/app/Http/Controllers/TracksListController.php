@@ -20,4 +20,12 @@ class TracksListController extends Controller
         }
         return back()->with('success','Track added successfully to list');
     }
+
+    public function deleteTrack(Request $request){
+        DB::table('tracktolists')->where([
+          ['list_id', $request->input('list_id')],
+          ['track_id', $request->input('track_id')],
+        ])->delete();
+        return back();
+    }
 }

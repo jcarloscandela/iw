@@ -92,7 +92,7 @@ function showTrack(str) {
       @endif
 
       <!-- <form class="center-block fill" action="created" method="post" style="padding:5%; width:50%" files> -->
-    {!! Form::open(['style' => "padding:5%; width:50%", 'class' => "center-block fill", 'action' => "TracksController@create"]) !!}
+    {!! Form::open(['style' => "padding:5%; width:50%", 'class' => "center-block fill", 'action' => "TracksController@create" ,'files' => true]) !!}
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <div class="form-group" >
           <label for="title">Title</label>
@@ -133,6 +133,10 @@ function showTrack(str) {
               <option>{{$artist->name}}</option>
             @endforeach
           </select>
+        </div>
+        <div class="form-group">
+          <label for="url">Track</label>
+          <input type="file" name="url" class="form-control-file" id="url">
         </div>
         <div class="form-group">
           <button type="submit" class="btn btn-primary">Create</button>

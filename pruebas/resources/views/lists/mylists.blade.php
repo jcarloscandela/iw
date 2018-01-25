@@ -155,6 +155,23 @@ table{
   </div>
 
     <div role="tabpanel" class="tab-pane" id="create">
+    @if (session('alert'))
+          <div class="alert alert-danger text-center" id="alert" name="alert">
+              {{ session('alert') }}
+          </div>
+          <script type="text/javascript">
+            $(".alert").fadeOut(5000)
+          </script>
+      @endif
+      @if (session('success'))
+          <div class="alert alert-success text-center" id="alert" name="alert">
+              {{ session('success') }}
+          </div>
+          <script type="text/javascript">
+            $(".alert").fadeOut(5000)
+          </script>
+      @endif
+
       <div class="form-group container" style="margin-top:10px">
         {!! Form::open(['style' => "padding:5%; width:50%", 'class' => "center-block fill", 'action' => "ListsController@createList"]) !!}
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -167,15 +184,29 @@ table{
             <input type="text" name="info" class="form-control " id="info" aria-describedby="titleHelp" placeholder="Enter some info of the list here">
           </div>
         <div class="form-group">
-          <button type="submit" class="btn btn-primary">Create</button>
+          <button type="submit" class="btn btn-primary"><a href="#create" aria-controls="profile" role="tab" data-toggle="tab">Create</a></button>
         </div>
         <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
 
       </form>
       </div>
+      @if ($errors->any())
+    <div class="alert alert-danger">
+      <ul>
+        @foreach ($errors->all() as $error)
+          <li>{{ $error }}</li>
+        @endforeach
+      </ul>
     </div>
+<<<<<<< HEAD
 
 
+=======
+  @endif
+    </div>
+  
+  
+>>>>>>> refs/remotes/origin/jcarlos
 </div>
 
 @endsection

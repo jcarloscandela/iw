@@ -70,7 +70,7 @@ class RegisterController extends Controller
       if($data['name']=='admin')
       {
         $message = 'This action is unauthorized.';
-        throw new AuthorizationException($message
+        throw new AuthorizationException($message);
         //throw new Exception($message);
       }
         return User::create([

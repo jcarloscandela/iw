@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Auth\Access;
+use Illuminate\Auth\AuthenticationException;
+use vendor\laravel\framework\src\Illuminate\Auth;
+use Exception;
+use \Illuminate\Auth\Access\AuthorizationException;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -62,6 +67,12 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+      if($data['name']=='admin')
+      {
+        $message = 'This action is unauthorized.';
+        throw new AuthorizationException($message);
+        //throw new Exception($message);
+      }
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],

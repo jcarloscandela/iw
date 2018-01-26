@@ -20,7 +20,7 @@ class CreateAgendaTable extends Migration
             $table->string('email', 100)->nullable();
             $table->text('observaciones', 100)->nullable();
             $table->string('sexo', 1)->default('H');
-            
+
             $table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ class CreateAgendaTable extends Migration
      */
     public function down()
     {
-        
+        Schema::dropIfExists('agenda');
     }
 }

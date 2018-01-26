@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use View;
 use App\agenda;
@@ -24,9 +22,20 @@ class HomeController extends Controller
       return View::make('home/tabla')
       ->with("donde", "Listado de personas");
     }
-
     public function tabla_ajax() {
       $personas = agenda::all();
       return Datatables::collection($personas)->make(true);
+    }
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    /*public function __construct()
+    {
+        $this->middleware('auth');
+    }*/
+    public function auth() {
+      return View::make('auth/register');
     }
 }

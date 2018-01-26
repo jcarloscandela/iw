@@ -74,6 +74,8 @@ Route::post('/tracksList', 'TracksListController@create')->middleware('auth');
 
 Route::post('delTrackList', 'TracksListController@deleteTrack')->middleware('auth');
 
+Route::post('delList', 'ListsController@delete')->middleware('auth');
+
 Route::get('editartist', function(){
   return view('edit.ArtistUpdate');
 });

@@ -44,6 +44,7 @@ table{
   <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active"><a href="#mylists" aria-controls="home" role="tab" data-toggle="tab">My lists</a></li>
     <li role="presentation"><a href="#create" aria-controls="profile" role="tab" data-toggle="tab">Create</a></li>
+    <li role="presentation"><a href="#delete" aria-controls="profile" role="tab" data-toggle="tab">Delete</a></li>
   </ul>
 
   <!-- Tab panes -->
@@ -192,12 +193,13 @@ table{
             <input type="text" name="info" class="form-control " id="info" aria-describedby="titleHelp" placeholder="Enter some info of the list here">
           </div>
         <div class="form-group">
-          <button type="submit" class="btn btn-primary"><a href="#create" aria-controls="profile" role="tab" data-toggle="tab">Create</a></button>
+          <button type="submit" class="btn btn-primary" style="color:#ffff">Create</button>
         </div>
         <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
 
       </form>
       </div>
+
       @if ($errors->any())
     <div class="alert alert-danger">
       <ul>
@@ -207,6 +209,20 @@ table{
       </ul>
     </div>
   @endif
+    </div>
+    <div role="tabpanel" class="tab-pane" id="delete">
+      @foreach($lists as $list)
+      <tr>
+        <td><label>{{$list->title}}</label></td>
+        <td>
+          <form class="" action="delList" method="post">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="idList" value="{{$list->id}}" ></input>
+            <button type="submit" class="btn btn-primary" name="button">Delete</button>
+          </form>
+        </td>
+      </tr>
+      @endforeach
     </div>
 </div>
 

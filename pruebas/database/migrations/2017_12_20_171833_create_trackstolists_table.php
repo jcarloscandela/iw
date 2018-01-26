@@ -13,11 +13,11 @@ class CreateTrackstolistsTable extends Migration
      */
     public function up()
     {
-        
+
         Schema::create('tracktolists', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('list_id')->unsigned();
-            $table->foreign('list_id')->references('id')->on('lists');
+            $table->foreign('list_id')->references('id')->on('lists')->onDelete('cascade');
             $table->integer('track_id')->unsigned();
             $table->foreign('track_id')->references('id')->on('tracks');
             $table->timestamps();

@@ -28,4 +28,9 @@ class ListsController extends Controller
 
 
       }
+
+      public function delete(Request $request){
+        DB::table('lists')->where('id', $request->input('idList'))->delete();
+        return back()->with('success','List deleted successfully');
+      }
 }

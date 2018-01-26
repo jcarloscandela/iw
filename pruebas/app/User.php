@@ -26,4 +26,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function error(){
+      return redirect()->back()->within('alert', 'Can not create admin user');
+    }
 }

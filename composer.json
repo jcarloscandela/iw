@@ -7,7 +7,7 @@
     "require": {
         "php": ">=5.6.4",
         "kartik-v/bootstrap-fileinput": "@dev",
-        "laravel/framework": "6.20.14",
+        "laravel/framework": "6.20.18",
         "laravel/tinker": "1.0.10",
         "laravelcollective/html": "5.8.1",
         "yajra/laravel-datatables-oracle": "7.0"

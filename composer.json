@@ -15,7 +15,7 @@
     "require-dev": {
         "fzaninotto/faker": "1.9.2",
         "mockery/mockery": "1.4.4",
-        "phpunit/phpunit": "9.5.10"
+        "phpunit/phpunit": "9.5.11"
     },
     "autoload": {
         "classmap": [

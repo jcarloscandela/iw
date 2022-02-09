@@ -9,7 +9,7 @@
         "kartik-v/bootstrap-fileinput": "@dev",
         "laravel/framework": "8.81.0",
         "laravel/tinker": "2.7.0",
-        "laravelcollective/html": "6.2.1",
+        "laravelcollective/html": "6.3.0",
         "yajra/laravel-datatables-oracle": "9.19.0"
     },
     "require-dev": {
